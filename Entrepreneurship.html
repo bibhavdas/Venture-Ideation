@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrepreneurship & Innovation Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #f1f5f9;
+            --bg-card: #ffffff;
+            --text-dark: #0f172a;
+            --text-muted: #475569;
+            --primary-blue: #2563eb;
+            --primary-blue-light: #dbeafe;
+            --accent-orange: #f59e0b;
+            --accent-orange-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --shadow-lg: 0 15px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+            padding-bottom: 60px;
+        }
+
+        /* Abstract Background Pattern */
+        .bg-pattern {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
+            background-size: 30px 30px;
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0; width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            box-shadow: var(--shadow-sm);
+        }
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover { color: var(--primary-blue); }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 100px 20px 20px;
+        }
+
+        /* Top Summary Section */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 50px 30px;
+            background: var(--bg-card);
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+            border-top: 6px solid var(--primary-blue);
+        }
+        .hero-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        .hero-title span { color: var(--primary-blue); }
+        .hero-summary {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Section Titles */
+        .section-header {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            color: var(--text-dark);
+            text-align: center;
+            margin: 60px 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .section-header::before, .section-header::after {
+            content: '';
+            height: 2px;
+            width: 50px;
+            background: var(--primary-blue);
+            border-radius: 2px;
+        }
+
+        /* Core Topics Grid */
+        .topics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .topic-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 35px;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .topic-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-blue);
+        }
+        .topic-icon {
+            width: 40px; height: 40px;
+            stroke: var(--primary-blue);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            margin-bottom: 20px;
+        }
+        .topic-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+        .topic-desc {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+        }
+
+        /* Relatable Example Box */
+        .example-box {
+            background: var(--accent-orange-light);
+            border-left: 4px solid var(--accent-orange);
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+            color: #92400e;
+        }
+        .example-label {
+            display: block;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: var(--accent-orange);
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        /* Exam Questions (Accordion Style) */
+        .question-bank {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .q-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .q-header {
+            padding: 25px 30px;
+            background: var(--bg-card);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            transition: background 0.3s ease;
+        }
+        .q-header:hover { background: var(--primary-blue-light); }
+        .q-icon-toggle {
+            width: 24px; height: 24px;
+            stroke: var(--primary-blue);
+            transition: transform 0.4s ease;
+        }
+        .q-card.open .q-icon-toggle { transform: rotate(180deg); }
+        
+        .q-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+            background: #f8fafc;
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+        .q-card.open .q-body {
+            max-height: 1000px; /* Arbitrary large number for expansion */
+            padding: 30px;
+            border-top: 1px solid var(--border-color);
+        }
+        .q-body p { margin-bottom: 15px; }
+        .q-body ul, .q-body ol { margin-left: 20px; margin-bottom: 15px; }
+        .q-body strong { color: var(--text-dark); }
+
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media(max-width: 768px) {
+            .topics-grid { grid-template-columns: 1fr; }
+            .hero-title { font-size: 2.2rem; }
+            .navbar { gap: 15px; padding: 15px; flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-pattern"></div>
+
+    <nav class="navbar">
+        <a href="#summary" class="nav-link">Summary</a>
+        <a href="#topics" class="nav-link">Core Topics</a>
+        <a href="#exam" class="nav-link">Exam Bank</a>
+    </nav>
+
+    <main class="container">
+        
+        <!-- SECTION 1: Top Summary -->
+        <section id="summary" class="hero-section reveal">
+            <h1 class="hero-title">Mastering <span>Entrepreneurship</span></h1>
+            <p class="hero-summary">
+                Entrepreneurship is the dynamic process of identifying real-world problems and executing innovative solutions while managing uncertainty and risk. Unlike a traditional businessman who operates on existing concepts, an entrepreneur acts as a challenger and innovator. The journey requires a distinct set of characteristics (like empathy, risk-taking, and resilience), the ability to perform multifaceted functions (managerial, promotional, and commercial), and the vision to capitalize on technological, social, and market inefficiencies. Furthermore, this entrepreneurial spirit is not limited to startups; it is increasingly vital within large organizations through "Intrapreneurship."
+            </p>
+        </section>
+
+        <!-- SECTION 2: Core Topics & Examples -->
+        <h2 id="topics" class="section-header">Core Topics & Real-World Applications</h2>
+        
+        <div class="topics-grid">
+            
+            <!-- Topic 1 -->
+            <div class="topic-card reveal">
+                <svg class="topic-icon" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                <h3 class="topic-title">1. The Entrepreneurial Mindset & Core Concept</h3>
+                <p class="topic-desc">According to U.S. Secretary Penny Pritzker and economic definitions, entrepreneurship is about problem recognition, execution, and team building rather than just having a good idea. An entrepreneur is an initiator who takes risks to introduce something new to the market.</p>
+                <div class="example-box">
+                    <span class="example-label">Relatable Example</span>
+                    A businessman opens a standard grocery store in a neighborhood. An entrepreneur notices people are too busy to shop and creates a 10-minute grocery delivery app (like Zepto or Instacart) to solve a modern market inefficiency.
+                </div>
+            </div>
+
+            <!-- Topic 2 -->
+            <div class="topic-card reveal">
+                <svg class="topic-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                <h3 class="topic-title">2. Characteristics of an Entrepreneur</h3>
+                <p class="topic-desc">Successful entrepreneurs possess 10 key traits: Creativity, Professionalism, Risk-taking, Passion, Planning, Knowledge, Social Skills, Open-mindedness towards failure, Empathy, and a Customer-first mindset.</p>
+                <div class="example-box">
+                    <span class="example-label">Relatable Example</span>
+                    When Thomas Edison failed thousands of times before inventing the lightbulb, he demonstrated <em>open-mindedness to failure</em> and immense <em>passion</em>. Similarly, a CEO who actively listens to their employees' struggles is utilizing <em>empathy</em> to build a stronger team.
+                </div>
+            </div>
+
+            <!-- Topic 3 -->
+            <div class="topic-card reveal">
+                <svg class="topic-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                <h3 class="topic-title">3. Functions of an Entrepreneur</h3>
+                <p class="topic-desc">Entrepreneurs wear many hats. They perform Entrepreneurial functions (innovation, risk-taking), Managerial functions (planning, organizing, staffing, directing, controlling), Promotional functions (idea selection, business plan preparation, financing), and Commercial functions (production, marketing, accounting).</p>
+                <div class="example-box">
+                    <span class="example-label">Relatable Example</span>
+                    If you start a shoe company, designing a self-tying shoe is the <em>entrepreneurial function</em>, hiring a design team is the <em>managerial function</em>, pitching to investors for funding is the <em>promotional function</em>, and running social media ads is the <em>commercial function</em>.
+                </div>
+            </div>
+
+            <!-- Topic 4 -->
+            <div class="topic-card reveal">
+                <svg class="topic-icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                <h3 class="topic-title">4. Classification & Types of Entrepreneurs</h3>
+                <p class="topic-desc">Entrepreneurs are categorized by functional behavior (Innovative, Adaptive, Fabian, Drone), type of business (Industrial, Retail, Social, etc.), development stage (First-generation vs. Inherited), motivation (Pure vs. Induced), and technology.</p>
+                <div class="example-box">
+                    <span class="example-label">Relatable Example</span>
+                    Steve Jobs inventing the iPhone makes him an <em>Innovative</em> entrepreneur. A smartphone company that copies the iPhone's features to sell in developing markets is an <em>Adaptive (Imitating)</em> entrepreneur. A <em>Drone</em> entrepreneur is a stubborn blockbuster video store owner who refuses to adapt to streaming.
+                </div>
+            </div>
+
+            <!-- Topic 5 -->
+            <div class="topic-card reveal">
+                <svg class="topic-icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                <h3 class="topic-title">5. Intrapreneurship</h3>
+                <p class="topic-desc">Coined by Macrae and Gifford Pinchot, an Intrapreneur is an employee who acts like an entrepreneur within a large bureaucratic organization. They take hands-on responsibility for creating innovation using existing corporate structures.</p>
+                <div class="example-box">
+                    <span class="example-label">Relatable Example</span>
+                    The creator of the "Like" button at Facebook or the team that developed the PlayStation within Sony were acting as <em>Intrapreneurs</em>—they innovated using the company's resources and backing, though the ultimate profits went to the parent company.
+                </div>
+            </div>
+
+            <!-- Topic 6 -->
+            <div class="topic-card reveal">
+                <svg class="topic-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <h3 class="topic-title">6. Entrepreneurial Opportunities</h3>
+                <p class="topic-desc">Opportunities are situations where new products or services can create value. They stem from three main sources: Technological changes, Market inefficiencies, and Social/Environmental changes.</p>
+                <div class="example-box">
+                    <span class="example-label">Relatable Example</span>
+                    <em>Market Inefficiency:</em> Airbnb identified empty spare rooms and expensive hotels to create a new lodging model. <em>Social Change:</em> The rise of "Beyond Meat" capitalized on the growing consumer shift towards plant-based, eco-friendly diets.
+                </div>
+            </div>
+
+        </div>
+
+        <!-- SECTION 3: Exam-Based Questions -->
+        <h2 id="exam" class="section-header">Exam-Based Questions & Answers Bank</h2>
+
+        <div class="question-bank">
+            
+            <div class="q-card reveal" onclick="toggleQ(this)">
+                <div class="q-header">
+                    <span>Q1: Based on Penny Pritzker’s lecture and the core definitions, differentiate between a businessman and an entrepreneur.</span>
+                    <svg class="q-icon-toggle" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </div>
+                <div class="q-body">
+                    <p>A businessman is a person who starts a business on an old concept or idea and makes his place in the market with his efforts and dedication. In contrast, an entrepreneur is an initiator, a challenger, and a driver who brings a unique idea, creates a new product/service, and does normal things in a different way.</p>
+                    <p>Furthermore, as Penny Pritzker emphasizes, entrepreneurs are distinguished by problem recognition, a willingness to execute and manage uncertainty, and a focus on broader economic and social impact, not just financial returns.</p>
+                </div>
+            </div>
+
+            <div class="q-card reveal" onclick="toggleQ(this)">
+                <div class="q-header">
+                    <span>Q2: Outline the key characteristics that define a successful entrepreneur.</span>
+                    <svg class="q-icon-toggle" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </div>
+                <div class="q-body">
+                    <p>There are 10 core characteristics identified:</p>
+                    <ol>
+                        <li><strong>Creativity:</strong> The ability to pin down ideas, think out of the box, and devise new products.</li>
+                        <li><strong>Professionalism:</strong> Self-discipline, reliability, and setting a strong organizational example.</li>
+                        <li><strong>Risk-taking:</strong> Discovering unique paths while having backups and evaluating consequences.</li>
+                        <li><strong>Passion:</strong> A driving force that helps overcome roadblocks and pushes beyond mere monetary joy.</li>
+                        <li><strong>Planning:</strong> Strategizing resource allocation and steps ahead of time.</li>
+                        <li><strong>Knowledge:</strong> Complete understanding of the niche, market trends, and one's own strengths/weaknesses.</li>
+                        <li><strong>Social Skills:</strong> Relationship building, talent sourcing, and team strategy formulation.</li>
+                        <li><strong>Open-mindedness:</strong> Humbly accepting failure as a learning experience and recognizing new opportunities.</li>
+                        <li><strong>Empathy:</strong> High emotional intelligence to understand employees and make the business "tick."</li>
+                        <li><strong>Customer is Everything:</strong> Sensing customer needs and personalizing the business to please them.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="q-card reveal" onclick="toggleQ(this)">
+                <div class="q-header">
+                    <span>Q3: Describe the four main categories of functions performed by an entrepreneur.</span>
+                    <svg class="q-icon-toggle" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </div>
+                <div class="q-body">
+                    <ol>
+                        <li><strong>Entrepreneurial Functions:</strong> Includes Innovation (inventing new markets/products), Risk-taking (bearing the final financial responsibility), and Organizing (bringing together men, material, and machines).</li>
+                        <li><strong>Managerial Functions:</strong> Includes Planning, Organizing, Staffing (HR management), Directing (guiding and activating employees), and Controlling (comparing actual performance with targets).</li>
+                        <li><strong>Promotional Functions:</strong> Identification/selection of the business idea, preparation of the business plan/project report, and determining the requirement for finance (short-term/long-term and sources of supply).</li>
+                        <li><strong>Commercial Functions:</strong> Production/Manufacturing, Marketing (the 7 P's: product, price, promotion, physical distribution, packaging, people, process), and Accounting.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="q-card reveal" onclick="toggleQ(this)">
+                <div class="q-header">
+                    <span>Q4: How are entrepreneurs classified based on their Functional Characteristics and Motivational Aspects?</span>
+                    <svg class="q-icon-toggle" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </div>
+                <div class="q-body">
+                    <p><strong>Based on Functional Characteristics:</strong></p>
+                    <ol>
+                        <li><strong>Innovative:</strong> Introduces new products/services/markets (usually in developed countries with high R&D).</li>
+                        <li><strong>Adaptive (Imitating):</strong> Adopts and imitates successful innovations created by others.</li>
+                        <li><strong>Fabian:</strong> Responds to changes only when clear that failure to adapt will result in losses; very shy and sticks to old customs.</li>
+                        <li><strong>Drone:</strong> Refuses to utilize opportunities or introduce changes, even if they suffer losses.</li>
+                    </ol>
+                    <br>
+                    <p><strong>Based on Motivational Aspects:</strong></p>
+                    <ol>
+                        <li><strong>Pure:</strong> Motivated by psychological/economic factors, desire for status, recognition, and money.</li>
+                        <li><strong>Induced:</strong> Motivated by incentives, subsidies, and financial/technical assistance from the government.</li>
+                        <li><strong>Motivated:</strong> Driven by the desire for self-fulfillment and the possibility of creating new products.</li>
+                        <li><strong>Spontaneous:</strong> Driven by natural talent, great self-confidence, and high resourcefulness.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="q-card reveal" onclick="toggleQ(this)">
+                <div class="q-header">
+                    <span>Q5: Explain the concept of Intrapreneurship. What are its major advantages and disadvantages?</span>
+                    <svg class="q-icon-toggle" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </div>
+                <div class="q-body">
+                    <p>Intrapreneurs are "dreamers who do"; they take hands-on responsibility for creating innovation within a large, bureaucratic organization. Intrapreneurship is the successful adaptation of entrepreneurial attitudes inside an existing corporate structure.</p>
+                    <p><strong>Advantages:</strong> Higher employee morale, better access to financial backing, access to information resources, more marketing clout, and a larger technology base.</p>
+                    <p><strong>Disadvantages:</strong> Less personal glory, potential suspicion from owners, the company absorbs all the profits, lack of prompt recognition/incentives, and the risk of taking discredit for failures.</p>
+                </div>
+            </div>
+
+            <div class="q-card reveal" onclick="toggleQ(this)">
+                <div class="q-header">
+                    <span>Q6: How is the distinction made between an "Entrepreneur" and "Entrepreneurship", and what are the primary sources of entrepreneurial opportunities?</span>
+                    <svg class="q-icon-toggle" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </div>
+                <div class="q-body">
+                    <p><strong>Distinction:</strong> An <strong>Entrepreneur</strong> refers to a person, whereas <strong>Entrepreneurship</strong> is the process. The Entrepreneur is the Visualiser, Creator, Organiser, Innovator, Technician, and Risk-taker. Entrepreneurship is the resulting Vision, Creation, Organisation, Innovation, Technology, and Risk-taking.</p>
+                    <br>
+                    <p><strong>Sources of Opportunities:</strong> Entrepreneurial opportunities arise when unmet needs or market inefficiencies are recognized. The three primary sources are:</p>
+                    <ol>
+                        <li><strong>Technological Changes:</strong> e.g., Smartphone adoption leading to mobile banking and e-commerce.</li>
+                        <li><strong>Market Inefficiencies:</strong> e.g., Airbnb providing an alternative model due to hotel industry inefficiencies.</li>
+                        <li><strong>Social and Environmental Changes:</strong> e.g., The rise of plant-based food startups due to growing environmental and health awareness.</li>
+                    </ol>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+        // Accordion Toggle Logic
+        function toggleQ(element) {
+            element.classList.toggle('open');
+        }
+
+        // Scroll Reveal Animation Logic
+        document.addEventListener("DOMContentLoaded", () => {
+            const reveals = document.querySelectorAll('.reveal');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+            reveals.forEach(reveal => observer.observe(reveal));
+        });
+    </script>
+</body>
+</html>

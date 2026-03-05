@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Value Proposition & Product Feature Mapping Strategy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Vibrant, Multi-Colored Palette */
+            --blue: #0284C7;      /* Tech/Logic */
+            --green: #10B981;     /* Nature/Growth */
+            --purple: #8B5CF6;    /* Innovation/Biotech */
+            --amber: #F59E0B;     /* Energy/Examples */
+            --teal: #14B8A6;      /* Balance */
+            --rose: #F43F5E;      /* Attention */
+            
+            --bg-color: #FAFAFA;
+            --surface: #FFFFFF;
+            --text-main: #334155;
+            --text-heading: #0F172A;
+            --text-muted: #64748B;
+            --border: #E2E8F0;
+            
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.03);
+            --radius-md: 12px;
+            --radius-lg: 20px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.7;
+            /* Colorful mesh gradient background */
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(16, 185, 129, 0.08) 0%, transparent 40%), /* Green */
+                radial-gradient(circle at 90% 30%, rgba(2, 132, 199, 0.08) 0%, transparent 40%), /* Blue */
+                radial-gradient(circle at 50% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 40%); /* Purple */
+            background-attachment: fixed;
+        }
+
+        h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; color: var(--text-heading); font-weight: 700; }
+
+        /* Layout */
+        .app-container { display: flex; min-height: 100vh; }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid var(--border);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .brand {
+            display: flex; align-items: center; gap: 12px; margin-bottom: 30px; color: var(--text-heading);
+        }
+
+        .nav-link {
+            text-decoration: none; color: var(--text-muted); font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem; font-weight: 600; padding: 12px 16px; border-radius: 8px;
+            transition: all 0.2s ease; display: flex; align-items: center; gap: 12px;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-link svg { width: 18px; height: 18px; fill: currentColor; }
+        .nav-link:hover { background-color: #F8FAFC; color: var(--blue); border-left-color: var(--blue); }
+        .nav-link.active { background-color: #EFF6FF; color: var(--blue); border-left-color: var(--blue); }
+
+        /* Main Content */
+        .main-content { margin-left: 280px; padding: 60px 40px; flex: 1; max-width: 1200px; }
+        section { margin-bottom: 80px; scroll-margin-top: 60px; }
+
+        .section-header { margin-bottom: 40px; position: relative; padding-bottom: 15px; }
+        .section-header::after {
+            content: ''; position: absolute; left: 0; bottom: 0; width: 60px; height: 4px;
+            background: linear-gradient(90deg, var(--green), var(--blue)); border-radius: 2px;
+        }
+        .section-header h2 { font-size: 2.2rem; color: var(--text-heading); }
+
+        /* Hero / Exec Summary */
+        .hero-card {
+            background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
+            padding: 40px; box-shadow: var(--shadow-lg); margin-bottom: 60px;
+            display: flex; gap: 40px; align-items: center; overflow: hidden; position: relative;
+        }
+        .hero-text { flex: 1; z-index: 2; }
+        .hero-text h1 { font-size: 2.8rem; margin-bottom: 20px; line-height: 1.2; background: linear-gradient(90deg, var(--purple), var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-text p { font-size: 1.15rem; color: var(--text-main); }
+        
+        /* The Biotech & Nature SVG Illustration */
+        .hero-visual {
+            flex-shrink: 0; width: 280px; height: 280px; position: relative; z-index: 1;
+        }
+
+        /* Core Topics Grid */
+        .topics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 30px; }
+
+        .topic-card {
+            background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);
+            padding: 30px; box-shadow: var(--shadow-sm); position: relative; transition: box-shadow 0.2s;
+            border-top-width: 5px;
+        }
+        .topic-card:hover { box-shadow: var(--shadow-md); }
+
+        /* Colorful Themes for Cards */
+        .theme-blue { border-top-color: var(--blue); }
+        .theme-blue .topic-icon { background: #E0F2FE; color: var(--blue); }
+        
+        .theme-green { border-top-color: var(--green); }
+        .theme-green .topic-icon { background: #D1FAE5; color: var(--green); }
+        
+        .theme-purple { border-top-color: var(--purple); }
+        .theme-purple .topic-icon { background: #EDE9FE; color: var(--purple); }
+        
+        .theme-teal { border-top-color: var(--teal); }
+        .theme-teal .topic-icon { background: #CCFBF1; color: var(--teal); }
+        
+        .theme-rose { border-top-color: var(--rose); }
+        .theme-rose .topic-icon { background: #FFE4E6; color: var(--rose); }
+
+        .topic-icon {
+            width: 54px; height: 54px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;
+        }
+        .topic-icon svg { width: 28px; height: 28px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .topic-title { font-size: 1.3rem; margin-bottom: 15px; color: var(--text-heading); }
+
+        .relatable-example {
+            margin-top: 20px; padding: 15px 20px; background: #FEF3C7; border-left: 4px solid var(--amber); border-radius: 0 8px 8px 0; font-size: 0.95rem; color: #92400E;
+        }
+        .relatable-example strong {
+            color: #B45309; font-family: 'Poppins', sans-serif; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 5px;
+        }
+
+        /* Interactive Mapping Engine */
+        .interactive-container {
+            background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 40px; box-shadow: var(--shadow-md);
+        }
+        .mapping-buttons { display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; }
+        .map-btn {
+            background: #F8FAFC; color: var(--text-main); border: 1px solid var(--border); padding: 10px 20px; border-radius: 8px; font-family: 'Poppins', sans-serif; font-weight: 600; cursor: pointer; transition: all 0.2s;
+        }
+        .map-btn:hover { border-color: var(--blue); color: var(--blue); }
+        .map-btn.active { background: var(--blue); color: white; border-color: var(--blue); }
+
+        .mapping-flow { display: flex; align-items: stretch; gap: 20px; }
+        .flow-step { flex: 1; background: #FAFAF9; border: 1px solid #E2E8F0; border-radius: 8px; padding: 25px; text-align: center; position: relative; }
+        .flow-step h4 { color: var(--text-muted); margin-bottom: 15px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .flow-arrow { display: flex; align-items: center; justify-content: center; color: var(--purple); }
+        .flow-arrow svg { width: 32px; height: 32px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .content-display { font-size: 1.05rem; color: var(--text-heading); font-weight: 600; }
+
+        /* Question Accordion */
+        .accordion-container { display: flex; flex-direction: column; gap: 15px; }
+        .accordion-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); }
+        .accordion-header {
+            padding: 20px 25px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: transparent; font-family: 'Poppins', sans-serif; font-weight: 600; color: var(--text-heading); transition: background 0.2s;
+        }
+        .accordion-header:hover { background: #F8FAFC; }
+        .accordion-header.active { color: var(--blue); border-bottom: 1px solid var(--border); background: #F8FAFC; }
+        .accordion-icon { width: 20px; height: 20px; transition: transform 0.2s ease; fill: none; stroke: currentColor; stroke-width: 2; }
+        .accordion-header.active .accordion-icon { transform: rotate(180deg); }
+        .accordion-content { padding: 0 25px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; background: var(--surface); color: var(--text-main); }
+        .accordion-content p { margin: 15px 0; }
+        .accordion-content ul { margin: 15px 0 15px 25px; }
+        .accordion-content li { margin-bottom: 10px; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar { width: 220px; } .main-content { margin-left: 220px; padding: 40px 30px; }
+            .hero-card { flex-direction: column; } .hero-visual { width: 100%; height: 200px; }
+            .mapping-flow { flex-direction: column; } .flow-arrow { transform: rotate(90deg); margin: 10px 0; }
+        }
+        @media (max-width: 768px) {
+            .app-container { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; position: static; padding: 20px; flex-direction: row; flex-wrap: wrap; justify-content: center; border-right: none; border-bottom: 1px solid var(--border); }
+            .main-content { margin-left: 0; padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="brand">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
+                <h2 style="font-size: 1.2rem;">Strategy Guide</h2>
+            </div>
+            <a href="#summary" class="nav-link active">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                Executive Summary
+            </a>
+            <a href="#core-topics" class="nav-link">
+                <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                Core Topics
+            </a>
+            <a href="#interactive-analysis" class="nav-link">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                Interactive Analysis
+            </a>
+            <a href="#exam-questions" class="nav-link">
+                <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                Knowledge Verification
+            </a>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            
+            <!-- Executive Summary -->
+            <section id="summary">
+                <div class="hero-card">
+                    <div class="hero-text">
+                        <h1>Value Proposition & Product Feature Mapping</h1>
+                        <p>The material details the fundamental concepts of Value Propositions and Value Mapping in marketing and strategic planning. It positions the value proposition not merely as marketing phrasing, but as a core strategic construct driven by academic theories such as Perceived Value and Jobs-to-Be-Done. The content outlines the four core elements of a value proposition, the distinct types of value delivered, and the critical methods for validation and measurement. Furthermore, it extensively covers the distinction between Product Features (the technical "what") and Value Mapping (the customer-centric "why"), providing a structured five-step process to translate technical specifications into understandable benefits and long-term strategic advantages.</p>
+                    </div>
+                    <!-- Custom SVG Illustration: Biology/Tech/Nature -->
+                    <div class="hero-visual">
+                        <svg viewBox="0 0 200 200" width="100%" height="100%">
+                            <!-- Abstract DNA Background -->
+                            <path d="M30,160 Q70,100 30,40 M60,160 Q20,100 60,40" fill="none" stroke="var(--purple)" stroke-width="4" stroke-dasharray="8 4" opacity="0.4" />
+                            <line x1="33" y1="140" x2="56" y2="140" stroke="var(--purple)" stroke-width="3" opacity="0.4"/>
+                            <line x1="45" y1="100" x2="45" y2="100" stroke="var(--purple)" stroke-width="3" opacity="0.4"/>
+                            <line x1="33" y1="60" x2="56" y2="60" stroke="var(--purple)" stroke-width="3" opacity="0.4"/>
+                            
+                            <!-- Laboratory Flask -->
+                            <path d="M100 160 L140 160 Q150 160 145 150 L125 110 L125 60 L130 60 L130 50 L110 50 L110 60 L115 60 L115 110 L95 150 Q90 160 100 160 Z" fill="#E0F2FE" stroke="var(--blue)" stroke-width="4" stroke-linejoin="round"/>
+                            <!-- Liquid in Flask -->
+                            <path d="M103 135 L137 135 L143 148 Q148 156 138 156 L102 156 Q92 156 97 148 Z" fill="var(--blue)" opacity="0.7"/>
+                            
+                            <!-- Plant Growing out of the Flask -->
+                            <path d="M120 135 Q120 90 150 70" fill="none" stroke="var(--green)" stroke-width="4" stroke-linecap="round"/>
+                            <!-- Leaves -->
+                            <path d="M125 105 Q140 95 145 105 Q135 115 125 105 Z" fill="var(--green)"/>
+                            <path d="M142 85 Q155 70 165 80 Q155 95 142 85 Z" fill="var(--green)"/>
+                            <path d="M145 75 Q160 55 170 65 Q160 85 145 75 Z" fill="var(--teal)"/>
+                            
+                            <!-- Bubbles -->
+                            <circle cx="115" cy="145" r="3" fill="#FFFFFF"/>
+                            <circle cx="125" cy="150" r="2" fill="#FFFFFF"/>
+                            <circle cx="130" cy="140" r="4" fill="#FFFFFF"/>
+                            <circle cx="120" cy="120" r="3" fill="var(--blue)" opacity="0.5"/>
+                            <circle cx="125" cy="100" r="2" fill="var(--blue)" opacity="0.5"/>
+                        </svg>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Core Topics -->
+            <section id="core-topics">
+                <div class="section-header">
+                    <h2>Core Topics Analysis</h2>
+                </div>
+                
+                <div class="topics-grid">
+                    <!-- Topic 1 -->
+                    <div class="topic-card theme-blue">
+                        <div class="topic-icon">
+                            <!-- DNA/Structure Icon -->
+                            <svg viewBox="0 0 24 24"><path d="M4 19c4.5-2.5 4.5-9.5 0-12M20 19c-4.5-2.5-4.5-9.5 0-12M8 10h8M6 15h12"></path></svg>
+                        </div>
+                        <h3 class="topic-title">1. Theoretical Frameworks</h3>
+                        <p>A value proposition integrates multiple academic frameworks. <strong>Perceived Value Theory</strong> involves comparing received benefits against costs. <strong>Competitive Strategy</strong> focuses on differentiation. <strong>Jobs-to-be-Done Theory</strong> suggests customers "hire" products to accomplish specific goals. <strong>Customer Value Creation Models</strong> emphasize long-term relationship building.</p>
+                        <div class="relatable-example">
+                            <strong>Relatable Example</strong>
+                            A homeowner does not buy a drill simply to own a drill; they "hire" the drill to achieve the goal of hanging a family portrait on the wall, fulfilling a specific "job."
+                        </div>
+                    </div>
+
+                    <!-- Topic 2 -->
+                    <div class="topic-card theme-green">
+                        <div class="topic-icon">
+                            <!-- Plant/Growth Icon -->
+                            <svg viewBox="0 0 24 24"><path d="M12 22V12M12 12C12 12 7 7 4 9C1 11 6 16 12 16ZM12 12C12 12 17 7 20 9C23 11 18 16 12 16Z"></path><path d="M12 2C12 2 15 5 15 8C15 11 12 12 12 12C12 12 9 11 9 8C9 5 12 2 12 2Z"></path></svg>
+                        </div>
+                        <h3 class="topic-title">2. Core Elements of Value</h3>
+                        <p>A robust value proposition requires four elements: a defined <strong>Target Customer</strong>, an identified <strong>Customer Problem</strong>, the <strong>Offered Solution</strong>, and a <strong>Unique Advantage</strong>. The value delivered can be Functional (efficiency), Emotional (peace of mind), Social (status/identity), or Economic (cost savings).</p>
+                        <div class="relatable-example">
+                            <strong>Relatable Example</strong>
+                            A premium hybrid vehicle targets environmentally conscious commuters. It solves high fuel costs by providing excellent mileage, while also allowing the driver to project an eco-friendly identity to their peers.
+                        </div>
+                    </div>
+
+                    <!-- Topic 3 -->
+                    <div class="topic-card theme-purple">
+                        <div class="topic-icon">
+                            <!-- Microscope/Analysis Icon -->
+                            <svg viewBox="0 0 24 24"><path d="M14 7h4M12 21h8M16 21v-5a3 3 0 00-3-3M6 12a4 4 0 004 4h0M10 16v5M6 12L4 4h4l2 8"></path><circle cx="10" cy="16" r="2"></circle></svg>
+                        </div>
+                        <h3 class="topic-title">3. Validation & Metrics</h3>
+                        <p>Value propositions must be tested rather than assumed. Validation methods include A/B testing, focus groups, and Minimum Viable Product (MVP) testing. Success is measured via specific metrics: Customer Satisfaction Score (CSAT), Net Promoter Score (NPS), Conversion Rates, Retention/Churn Rates, and Customer Lifetime Value (CLV).</p>
+                        <div class="relatable-example">
+                            <strong>Relatable Example</strong>
+                            A software company launches two different landing pages. They measure which page results in more user sign-ups (Conversion Rate) and later track how many of those users continue paying after six months (Retention Rate).
+                        </div>
+                    </div>
+
+                    <!-- Topic 4 -->
+                    <div class="topic-card theme-rose">
+                        <div class="topic-icon">
+                            <!-- Flask/Chemistry Icon -->
+                            <svg viewBox="0 0 24 24"><path d="M9 2v7.31L2.9 20.9A2 2 0 0 0 4.6 24h14.8a2 2 0 0 0 1.7-3.1L15 9.31V2"></path><path d="M8.5 2h7M14 16H9"></path></svg>
+                        </div>
+                        <h3 class="topic-title">4. Features vs. Value Mapping</h3>
+                        <p><strong>Product features</strong> are specific, technical characteristics that define what a product does. <strong>Value Mapping</strong> is the critical process of translating these features into understandable customer benefits, answering why the feature matters emotionally or economically to the end user.</p>
+                        <div class="relatable-example">
+                            <strong>Relatable Example</strong>
+                            A smartphone possesses a 5000 mAh battery (Technical Feature). The benefit is that it allows the phone to last all day without charging. The ultimate value is that it saves the user time and reduces anxiety.
+                        </div>
+                    </div>
+
+                    <!-- Topic 5 -->
+                    <div class="topic-card theme-teal">
+                        <div class="topic-icon">
+                            <!-- Tree/Ecosystem Icon -->
+                            <svg viewBox="0 0 24 24"><path d="M12 22v-8"></path><path d="M12 14c-4 0-7-3.5-7-7.5S8 2 12 2s7 2.5 7 7.5-3 7.5-7 7.5z"></path><path d="M12 14c2.5 0 4-1.5 4-4M12 14c-2.5 0-4-1.5-4-4"></path></svg>
+                        </div>
+                        <h3 class="topic-title">5. The Mapping Process</h3>
+                        <p>Mapping follows a five-step procedure: Identify Customer Needs, List Product Features, Translate Features into Benefits, Link Benefits to Value, and Prioritize High-Value Features. This prevents feature overload and shifts organizational focus from product-centric thinking to customer-centric thinking.</p>
+                        <div class="relatable-example">
+                            <strong>Relatable Example</strong>
+                            An online learning platform lists "recorded lectures" as a feature. They translate this into the benefit of a "flexible study schedule." Finally, they link this to the value of "convenience for working professionals."
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interactive Framework Analysis -->
+            <section id="interactive-analysis">
+                <div class="section-header">
+                    <h2>Interactive Analysis: Value Translation Engine</h2>
+                </div>
+                
+                <div class="interactive-container">
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">Select a scenario to observe how a technical specification is systematically mapped to a customer-centric value.</p>
+                    
+                    <div class="mapping-buttons">
+                        <button class="map-btn active" onclick="updateMapping(0)">Smartphone Battery</button>
+                        <button class="map-btn" onclick="updateMapping(1)">Online Learning Platform</button>
+                        <button class="map-btn" onclick="updateMapping(2)">Automated Software Tool</button>
+                    </div>
+
+                    <div class="mapping-flow">
+                        <!-- Step 1 -->
+                        <div class="flow-step" style="border-top: 4px solid var(--blue);">
+                            <h4>1. Product Feature</h4>
+                            <div class="content-display" id="feat-display">
+                                5000 mAh Battery Capacity
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">The specific technical capability (The What).</p>
+                        </div>
+
+                        <div class="flow-arrow">
+                            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="flow-step" style="border-top: 4px solid var(--purple);">
+                            <h4>2. Customer Benefit</h4>
+                            <div class="content-display" id="ben-display">
+                                Device lasts all day without requiring a charge
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">What the feature allows the user to achieve (The How).</p>
+                        </div>
+
+                        <div class="flow-arrow">
+                            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="flow-step" style="border-top: 4px solid var(--green); background: #ECFDF5;">
+                            <h4>3. Delivered Value</h4>
+                            <div class="content-display" id="val-display" style="color: var(--green); font-weight: 700;">
+                                Saves time and eliminates anxiety during a busy workday
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">Why the benefit matters emotionally/economically (The Why).</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Exam-Based Questions -->
+            <section id="exam-questions">
+                <div class="section-header">
+                    <h2>Knowledge Verification</h2>
+                </div>
+
+                <div class="accordion-container">
+                    
+                    <!-- Q1 -->
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Q1: Explain the four theoretical frameworks that integrate to form the concept of a Value Proposition.</span>
+                            <svg class="accordion-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p>A strategic value proposition is built upon four academic frameworks:</p>
+                            <ul>
+                                <li><strong>Perceived Value Theory (Zeithaml, 1988):</strong> Posits that customers assess value by weighing the benefits they receive against the costs incurred (including financial, time, effort, and risk).</li>
+                                <li><strong>Competitive Strategy (Michael Porter):</strong> States that value propositions are essential for differentiation and positioning, allowing firms to gain a sustainable competitive advantage in the market.</li>
+                                <li><strong>Jobs-to-Be-Done Theory (Clayton Christensen):</strong> Theorizes that customers do not simply purchase items; they "hire" products or services to accomplish specific tasks or goals.</li>
+                                <li><strong>Customer Value Creation Models:</strong> Emphasize the importance of customer utility, long-term satisfaction, loyalty, and ongoing relationship building rather than one-off transactions.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Q2: What are the four core elements of a well-developed Value Proposition?</span>
+                            <svg class="accordion-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p>A strong value proposition must clearly articulate the following four elements:</p>
+                            <ul>
+                                <li><strong>Target Customer or Stakeholder:</strong> Identifying exactly who the value is intended for, preventing overgeneralization and ensuring marketing relevance.</li>
+                                <li><strong>Customer Problem or Need:</strong> Defining the specific pain point, inefficiency, or unmet desire the customer faces, which must be grounded in validated research.</li>
+                                <li><strong>Offered Benefit or Solution:</strong> Explaining exactly how the product addresses the identified problem through functional, emotional, social, or economic benefits.</li>
+                                <li><strong>Differentiation or Unique Advantage:</strong> Highlighting why the offering is superior to competitors, whether through innovation, technology, or customer experience.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Q3: Discuss the four distinct types of value a product or service can deliver to a customer, providing an example for each.</span>
+                            <svg class="accordion-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Organizations can deliver multiple dimensions of value, including:</p>
+                            <ul>
+                                <li><strong>Functional Value:</strong> Provides practical, performance-based benefits. <em>Example:</em> A software tool that automates repetitive data entry to save time.</li>
+                                <li><strong>Emotional Value:</strong> Creates positive feelings or psychological comfort. <em>Example:</em> A wellness application that reduces daily stress and promotes peace of mind.</li>
+                                <li><strong>Social Value:</strong> Enhances the user's social image, status, or identity. <em>Example:</em> Using eco-friendly, ethically sourced products that reflect environmental responsibility to peers.</li>
+                                <li><strong>Economic Value:</strong> Delivers financial efficiency or direct cost reduction. <em>Example:</em> A bundled subscription service that offers a significant discount compared to buying items individually.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Q4 -->
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Q4: Describe the components of the Value Proposition Canvas and how it ensures strategic alignment.</span>
+                            <svg class="accordion-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p>The Value Proposition Canvas, developed by Alexander Osterwalder, evaluates alignment using two main sections:</p>
+                            <ul>
+                                <li><strong>The Customer Profile:</strong> This maps the customer's <em>Jobs</em> (tasks they aim to accomplish), <em>Pains</em> (risks and frustrations faced during the job), and <em>Gains</em> (desired outcomes and positive experiences).</li>
+                                <li><strong>The Value Map:</strong> This outlines the <em>Products & Services</em> offered, the <em>Pain Relievers</em> (how the product eliminates customer frustrations), and <em>Gain Creators</em> (how the product generates desired benefits).</li>
+                                <li><strong>Strategic Alignment:</strong> The canvas ensures that the organization's specific offerings (Value Map) directly correspond to the actual needs of the customer (Customer Profile). Misalignment results in poor market adoption.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Q5 -->
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Q5: How can organizations validate their value propositions, and what key metrics are used to measure their effectiveness?</span>
+                            <svg class="accordion-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <ul>
+                                <li><strong>Validation Methods:</strong> Organizations should validate propositions using Customer Interviews, Focus Groups, Surveys, Prototype/Minimum Viable Product (MVP) testing, and A/B testing of marketing messaging.</li>
+                                <li><strong>Measurement Metrics:</strong> Effectiveness is tracked using the Customer Satisfaction Score (CSAT) for immediate experience, the Net Promoter Score (NPS) for loyalty and referral likelihood, Conversion Rates for marketing effectiveness, Retention and Churn Rates for long-term engagement, and Customer Lifetime Value (CLV) to estimate total revenue generation.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Q6 -->
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Q6: Distinguish between "Product Features" and "Value Mapping," and categorize the four types of product features.</span>
+                            <svg class="accordion-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <ul>
+                                <li><strong>The Distinction:</strong> Product Features represent the "What" of a product (technical characteristics, functionalities, or specifications designed by engineers). Value Mapping explains the "Why" (linking those technical features to tangible customer benefits and perceived economic/emotional value).</li>
+                                <li><strong>Four Types of Features:</strong> 
+                                    1) <em>Functional Features</em> (core performance like battery life).
+                                    2) <em>Aesthetic Features</em> (visual appeal and design like color schemes). 
+                                    3) <em>Technical Features</em> (backend capabilities like encryption algorithms). 
+                                    4) <em>Support and Service Features</em> (post-purchase assistance like 24/7 warranties).
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Q7 -->
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Q7: Outline the five-step Value Mapping Process used to translate technical specifications into customer-understandable benefits.</span>
+                            <svg class="accordion-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p>The strategic process follows five sequential steps:</p>
+                            <ul>
+                                <li><strong>Step 1: Identify Customer Needs.</strong> Utilize research to understand customer jobs, pains, and desired gains.</li>
+                                <li><strong>Step 2: List Product Features.</strong> Document all major and minor technical specifications and services offered.</li>
+                                <li><strong>Step 3: Translate Features into Benefits.</strong> Explain what each technical feature actually enables the user to achieve practically.</li>
+                                <li><strong>Step 4: Link Benefits to Value.</strong> Demonstrate how those practical benefits lead to emotional, social, or economic improvements in the customer's life.</li>
+                                <li><strong>Step 5: Prioritize High-Value Features.</strong> Focus design and marketing investments on the features that provide the highest perceived value to the target segment.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Q8 -->
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Q8: Why is a clear Value Proposition essential, and what challenges arise if an organization lacks one?</span>
+                            <svg class="accordion-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <ul>
+                                <li><strong>Importance:</strong> It clarifies why a product exists, guides customer-centric development, strengthens market positioning, enhances long-term retention, and improves competitive differentiation in crowded markets.</li>
+                                <li><strong>Challenges of Lacking One:</strong> Organizations without a clear proposition suffer from vague messaging, weak differentiation, customer confusion, and the tendency to overpromise benefits without the ability to deliver. They often focus on features rather than benefits, leading to poor market performance.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Q9 -->
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Q9: What are the common mistakes made during feature and value mapping, and what is the strategic importance of avoiding them?</span>
+                            <svg class="accordion-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <ul>
+                                <li><strong>Common Mistakes:</strong> Relying heavily on technical jargon, ignoring market feedback, overloading the product with unnecessary features (feature creep), assuming all features hold equal importance to the user, and failing to update the map as market needs evolve.</li>
+                                <li><strong>Strategic Importance:</strong> Avoiding these mistakes forces an organization to shift from <em>product-centric thinking</em> to <em>customer-centric thinking</em>. This shift improves customer loyalty, optimizes resource allocation (saving development costs), and significantly increases the probability of market success.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        // Sidebar Navigation Highlight Sync on Scroll
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll(".nav-link");
+
+        window.addEventListener("scroll", () => {
+            let current = "";
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= (sectionTop - 150)) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove("active");
+                if (link.getAttribute("href").includes(current)) {
+                    link.classList.add("active");
+                }
+            });
+        });
+
+        // Accordion Logic
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const isActive = header.classList.contains('active');
+
+                // Close all other accordions
+                document.querySelectorAll('.accordion-header').forEach(h => {
+                    h.classList.remove('active');
+                    h.nextElementSibling.style.maxHeight = null;
+                    h.nextElementSibling.style.paddingTop = '0';
+                    h.nextElementSibling.style.paddingBottom = '0';
+                });
+
+                // Toggle current accordion
+                if (!isActive) {
+                    header.classList.add('active');
+                    content.style.maxHeight = content.scrollHeight + 40 + "px"; // 40 for padding
+                    content.style.paddingTop = "10px";
+                    content.style.paddingBottom = "20px";
+                }
+            });
+        });
+
+        // Interactive Mapping Data & Logic
+        const mappingData =[
+            {
+                feature: "5000 mAh Battery Capacity",
+                benefit: "Device lasts all day without requiring a charge",
+                value: "Saves time and eliminates anxiety during a busy workday"
+            },
+            {
+                feature: "Recorded Video Lectures",
+                benefit: "Access course material at any time of the day",
+                value: "Provides ultimate convenience and flexibility for working professionals"
+            },
+            {
+                feature: "Automated Data Entry Script",
+                benefit: "Removes the need for manual typing of repetitive records",
+                value: "Dramatically increases operational efficiency and lowers economic costs"
+            }
+        ];
+
+        function updateMapping(index) {
+            // Update Active Button
+            document.querySelectorAll('.map-btn').forEach((btn, i) => {
+                if (i === index) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Update Text Content
+            document.getElementById('feat-display').textContent = mappingData[index].feature;
+            document.getElementById('ben-display').textContent = mappingData[index].benefit;
+            document.getElementById('val-display').textContent = mappingData[index].value;
+        }
+    </script>
+</body>
+</html>

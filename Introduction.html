@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundamentals of Entrepreneurship and Ideation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Light Corporate Palette */
+            --primary: #0F4C81;      /* Classic Corporate Blue */
+            --secondary: #4A90E2;    /* Lighter Professional Blue */
+            --accent: #2C3E50;       /* Dark Slate */
+            --bg-color: #F4F7F9;     /* Very Light Grayish Blue */
+            --surface: #FFFFFF;      /* Clean White */
+            --text-main: #334155;    /* Slate 700 */
+            --text-heading: #1E293B; /* Slate 800 */
+            --text-muted: #64748B;   /* Slate 500 */
+            --border: #E2E8F0;       /* Light Border */
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(15, 76, 129, 0.1), 0 2px 4px -1px rgba(15, 76, 129, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(15, 76, 129, 0.1), 0 4px 6px -2px rgba(15, 76, 129, 0.05);
+            --radius-md: 8px;
+            --radius-lg: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.7;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Subtle Corporate Background SVGs */
+        .bg-corporate-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.03;
+            background-image: 
+                /* Grid */
+                linear-gradient(var(--primary) 1px, transparent 1px),
+                linear-gradient(90deg, var(--primary) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .bg-svg-1 {
+            position: fixed; top: -5%; right: -5%; width: 400px; height: 400px; opacity: 0.04; z-index: -1; pointer-events: none;
+        }
+        .bg-svg-2 {
+            position: fixed; bottom: -10%; left: -5%; width: 500px; height: 500px; opacity: 0.04; z-index: -1; pointer-events: none;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-heading);
+            font-weight: 700;
+        }
+
+        /* Layout */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 260px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-right: 1px solid var(--border);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            color: var(--primary);
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 20px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-link svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .nav-link:hover {
+            background-color: var(--bg-color);
+            color: var(--primary);
+            border-left-color: var(--secondary);
+        }
+
+        .nav-link.active {
+            background-color: rgba(15, 76, 129, 0.08);
+            color: var(--primary);
+            border-left-color: var(--primary);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 260px;
+            padding: 60px 50px;
+            flex: 1;
+            max-width: 1100px;
+        }
+
+        section {
+            margin-bottom: 80px;
+            scroll-margin-top: 60px;
+        }
+
+        .section-header {
+            margin-bottom: 40px;
+            position: relative;
+            padding-bottom: 12px;
+        }
+
+        .section-header::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            color: var(--accent);
+        }
+
+        /* Hero / Exec Summary */
+        .hero-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 50px;
+            box-shadow: var(--shadow-md);
+            border-top: 6px solid var(--primary);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .hero-card h1 {
+            font-size: 2.5rem;
+            line-height: 1.3;
+            color: var(--primary);
+        }
+
+        .hero-card p {
+            font-size: 1.1rem;
+            color: var(--text-main);
+        }
+
+        /* Core Topics Grid */
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .topic-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 30px;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--secondary);
+        }
+
+        .topic-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(15, 76, 129, 0.08);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .topic-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .topic-title {
+            font-size: 1.25rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+
+        .relatable-example {
+            margin-top: auto;
+            padding-top: 20px;
+        }
+
+        .example-box {
+            background: rgba(74, 144, 226, 0.05);
+            border-left: 4px solid var(--secondary);
+            padding: 15px;
+            border-radius: 0 4px 4px 0;
+            font-size: 0.95rem;
+        }
+
+        .example-box strong {
+            color: var(--primary);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        /* Interactive Analysis Widget */
+        .interactive-widget {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .widget-header {
+            background: #F8FAFC;
+            padding: 20px 30px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .widget-header h3 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .widget-body {
+            display: flex;
+            min-height: 300px;
+        }
+
+        .widget-tabs {
+            width: 250px;
+            background: #F8FAFC;
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .widget-tab {
+            padding: 15px 20px;
+            border: none;
+            background: transparent;
+            text-align: left;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .widget-tab:hover {
+            background: rgba(15, 76, 129, 0.05);
+            color: var(--primary);
+        }
+
+        .widget-tab.active {
+            background: var(--surface);
+            color: var(--primary);
+            border-left-color: var(--primary);
+            box-shadow: -1px 0 0 var(--surface); /* hides right border */
+            position: relative;
+            z-index: 2;
+        }
+
+        .widget-tab svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .widget-content-area {
+            padding: 40px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: var(--surface);
+        }
+
+        .widget-pane {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .widget-pane.active {
+            display: block;
+        }
+
+        .widget-pane h4 {
+            color: var(--accent);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+
+        .widget-pane p {
+            color: var(--text-main);
+            font-size: 1.05rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Question Accordion */
+        .accordion-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .accordion-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .accordion-toggle {
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: var(--text-heading);
+            background: transparent;
+            border-radius: var(--radius-md);
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .accordion-toggle:hover {
+            background: rgba(15, 76, 129, 0.02);
+            color: var(--primary);
+        }
+
+        .accordion-toggle.active {
+            color: var(--primary);
+            border-bottom: 1px solid var(--border);
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .icon-plus-minus {
+            width: 20px;
+            height: 20px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .icon-plus-minus::before, .icon-plus-minus::after {
+            content: '';
+            position: absolute;
+            background-color: currentColor;
+            transition: transform 0.3s ease;
+        }
+
+        .icon-plus-minus::before {
+            top: 9px; left: 0; width: 20px; height: 2px;
+        }
+
+        .icon-plus-minus::after {
+            top: 0; left: 9px; width: 2px; height: 20px;
+        }
+
+        .accordion-toggle.active .icon-plus-minus::after {
+            transform: rotate(90deg);
+        }
+
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: var(--surface);
+        }
+
+        .accordion-inner {
+            padding: 20px 25px;
+            color: var(--text-main);
+            border-top: none;
+        }
+
+        .accordion-inner ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .accordion-inner li {
+            margin-bottom: 8px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar { width: 220px; padding: 30px 15px; }
+            .main-content { margin-left: 220px; padding: 40px 30px; }
+            .widget-body { flex-direction: column; }
+            .widget-tabs { width: 100%; flex-direction: row; border-right: none; border-bottom: 1px solid var(--border); overflow-x: auto; }
+            .widget-tab { border-left: none; border-bottom: 3px solid transparent; white-space: nowrap; }
+            .widget-tab.active { border-left-color: transparent; border-bottom-color: var(--primary); box-shadow: none; }
+        }
+
+        @media (max-width: 768px) {
+            .app-container { flex-direction: column; }
+            .sidebar { 
+                width: 100%; 
+                height: auto; 
+                position: static; 
+                padding: 20px; 
+                flex-direction: row; 
+                flex-wrap: wrap; 
+                justify-content: center;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+            .brand { border-bottom: none; margin-bottom: 0; padding-bottom: 0; width: 100%; justify-content: center; margin-bottom: 15px; }
+            .main-content { margin-left: 0; padding: 30px 20px; }
+            .hero-card { padding: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Corporate Pattern SVGs -->
+    <div class="bg-corporate-pattern"></div>
+    <svg class="bg-svg-1" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="0.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+    <svg class="bg-svg-2" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="0.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="brand">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
+                <h2 style="font-size: 1.1rem; letter-spacing: 0.5px;">Strategy Guide</h2>
+            </div>
+            <a href="#summary" class="nav-link active">
+                <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                Executive Summary
+            </a>
+            <a href="#core-topics" class="nav-link">
+                <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                Core Topics
+            </a>
+            <a href="#interactive-analysis" class="nav-link">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                Interactive Analysis
+            </a>
+            <a href="#knowledge-verification" class="nav-link">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                Knowledge Verification
+            </a>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            
+            <!-- Executive Summary -->
+            <section id="summary">
+                <div class="hero-card">
+                    <h1>Fundamentals of Entrepreneurship and Ideation</h1>
+                    <p>The material provides a foundational overview of entrepreneurship, bridging theoretical concepts with real-world leadership insights. It begins by defining core terms such as venture, ideation, entrepreneur, and entrepreneurship, contrasting them with the emerging role of the intrapreneur. The content details the multifaceted functions of an entrepreneur—categorized into entrepreneurial, managerial, promotional, and commercial roles—and provides a comprehensive classification system based on behavior, business type, and motivation. Furthermore, it incorporates practical insights from former U.S. Secretary of Commerce Penny Pritzker, emphasizing calculated risk-taking, early immersion, and values-driven problem-solving as the bedrock of entrepreneurial opportunities.</p>
+                </div>
+            </section>
+
+            <!-- Core Topics -->
+            <section id="core-topics">
+                <div class="section-header">
+                    <h2>Core Topics Analysis</h2>
+                </div>
+                
+                <div class="topics-grid">
+                    <!-- Topic 1 -->
+                    <div class="topic-card">
+                        <div class="topic-icon">
+                            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        </div>
+                        <h3 class="topic-title">1. The Foundations of Entrepreneurship</h3>
+                        <p>A <em>Venture</em> is a new business activity, while <em>Ideation</em> is the formation of concepts. <em>Entrepreneurship</em> is the dynamic process of converting these ideas into commercial opportunities by accepting risk. The <em>Entrepreneur</em> is the innovator and change agent undertaking this process. Conversely, an <em>Intrapreneur</em> (coined by Macrae and Gifford Pinchot) applies these exact startup practices and assumes hands-on responsibility for innovation <em>within</em> an existing, large organization.</p>
+                        <div class="relatable-example">
+                            <div class="example-box">
+                                <strong>Relatable Example</strong>
+                                A software engineer who leaves a corporation to build a new networking app is an Entrepreneur. An engineer who pitches and builds that same app internally using the corporation's resources and funding is an Intrapreneur.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Topic 2 -->
+                    <div class="topic-card">
+                        <div class="topic-icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        </div>
+                        <h3 class="topic-title">2. The Entrepreneurial Mindset</h3>
+                        <p>Entrepreneurship is rarely a single, spontaneous decision. It is shaped by early immersion in business environments, learning through operational responsibility, and developing a comfort with calculated (not reckless) risk based on data. Most importantly, it is driven by a desire to solve structural, real-world inefficiencies and align ventures with positive social and economic impact.</p>
+                        <div class="relatable-example">
+                            <div class="example-box">
+                                <strong>Relatable Example</strong>
+                                Instead of opening a generic grocery store, an entrepreneur recognizes a "food desert" in an urban area and opens a scalable, affordable fresh-produce market, using business as a direct tool for social change.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Topic 3 -->
+                    <div class="topic-card">
+                        <div class="topic-icon">
+                            <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        </div>
+                        <h3 class="topic-title">3. The Four Core Functions</h3>
+                        <p>An entrepreneur's responsibilities extend far beyond just having an idea. They execute four specific functions: 1) <em>Entrepreneurial</em> (innovating and taking financial risks). 2) <em>Managerial</em> (planning, organizing resources, staffing, and controlling outcomes). 3) <em>Promotional</em> (scanning for opportunities, conducting cost-benefit analyses, and writing business plans). 4) <em>Commercial</em> (managing production, marketing, and accounting).</p>
+                        <div class="relatable-example">
+                            <div class="example-box">
+                                <strong>Relatable Example</strong>
+                                A coffee shop owner invents a new brewing method (Entrepreneurial), writes a business plan to secure a bank loan (Promotional), hires and trains the barista staff (Managerial), and runs targeted local advertising (Commercial).
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Topic 4 -->
+                    <div class="topic-card">
+                        <div class="topic-icon">
+                            <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                        </div>
+                        <h3 class="topic-title">4. Classifications of Entrepreneurs</h3>
+                        <p>Entrepreneurs are classified by their functional approach and motivation. Functionally, they can be <em>Innovative</em> (creating entirely new markets), <em>Adaptive</em> (imitating and slightly modifying successful ideas), <em>Fabian</em> (highly cautious, only adopting change when forced), or <em>Drone</em> (stubbornly resisting change, often suffering losses).</p>
+                        <div class="relatable-example">
+                            <div class="example-box">
+                                <strong>Relatable Example</strong>
+                                When digital payments became popular, an Innovative entrepreneur created a new mobile wallet. An Adaptive entrepreneur integrated QR codes into their existing store. A Fabian entrepreneur waited five years until cash usage plummeted to buy a card reader.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Topic 5 -->
+                    <div class="topic-card">
+                        <div class="topic-icon">
+                            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        </div>
+                        <h3 class="topic-title">5. Identifying Opportunities</h3>
+                        <p>Opportunities arise when innovators recognize unmet needs and combine resources in new ways to create customer value. These gaps are typically created by three major shifts: Technological changes (enabling new products), Market inefficiencies (shortages or accessibility issues), and Social/environmental changes (shifts in consumer lifestyle and sustainability).</p>
+                        <div class="relatable-example">
+                            <div class="example-box">
+                                <strong>Relatable Example</strong>
+                                Observing the social shift toward plant-based diets and the technological advancement in food science, an entrepreneur seizes the opportunity to launch a startup producing lab-grown dairy alternatives.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interactive Analysis Widget -->
+            <section id="interactive-analysis">
+                <div class="section-header">
+                    <h2>Interactive Analysis</h2>
+                </div>
+                
+                <div class="interactive-widget">
+                    <div class="widget-header">
+                        <h3>The Four Core Functions of an Entrepreneur</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">Select a functional category to explore its specific operational duties.</p>
+                    </div>
+                    
+                    <div class="widget-body">
+                        <div class="widget-tabs">
+                            <button class="widget-tab active" onclick="switchTab('tab-1')">
+                                <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+                                Entrepreneurial
+                            </button>
+                            <button class="widget-tab" onclick="switchTab('tab-2')">
+                                <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                Managerial
+                            </button>
+                            <button class="widget-tab" onclick="switchTab('tab-3')">
+                                <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                                Promotional
+                            </button>
+                            <button class="widget-tab" onclick="switchTab('tab-4')">
+                                <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                Commercial
+                            </button>
+                        </div>
+                        
+                        <div class="widget-content-area">
+                            <div id="tab-1" class="widget-pane active">
+                                <h4>Entrepreneurial Functions</h4>
+                                <p>This function encompasses the foundational innovation and risk-taking aspects of the venture. The entrepreneur introduces new products, services, and markets by identifying unmet customer needs. Driven by creativity and competition, they bear the ultimate uncertainty of profit and loss, pay factors of production in advance, and take final responsibility for business risk.</p>
+                            </div>
+                            <div id="tab-2" class="widget-pane">
+                                <h4>Managerial Functions</h4>
+                                <p>These are the day-to-day administrative duties required to run the organization. It involves <strong>Planning</strong> (deciding what, how, when, and where work is done), <strong>Organizing</strong> (structuring tasks and authority), <strong>Staffing</strong> (recruitment, selection, training), <strong>Directing</strong> (guiding and motivating employees), and <strong>Controlling</strong> (comparing actual performance with standards).</p>
+                            </div>
+                            <div id="tab-3" class="widget-pane">
+                                <h4>Promotional Functions</h4>
+                                <p>Promotional functions are concentrated during the ideation and launch phases. It requires the precise identification of a business idea through opportunity scanning and cost-benefit analysis. Furthermore, it entails the creation of the formal Business Plan or Project Report, which serves as the blueprint for enterprise establishment and is absolutely essential for securing financial assistance.</p>
+                            </div>
+                            <div id="tab-4" class="widget-pane">
+                                <h4>Commercial Functions</h4>
+                                <p>Commercial functions focus on the actual creation and selling of the product. This includes <strong>Production/Manufacturing</strong> (site selection, product design, production control), <strong>Marketing</strong> (navigating Product, Price, Promotion, Place, and People), and <strong>Accounting</strong> (recording, classifying, summarizing transactions, and interpreting profit analysis).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Exam-Based Questions -->
+            <section id="knowledge-verification">
+                <div class="section-header">
+                    <h2>Knowledge Verification</h2>
+                </div>
+
+                <div class="accordion-wrapper">
+                    
+                    <div class="accordion-card">
+                        <button class="accordion-toggle" onclick="toggleAccordion(this)">
+                            <span>Q1: Define the terms "Venture" and "Ideation" in the context of business creation.</span>
+                            <div class="icon-plus-minus"></div>
+                        </button>
+                        <div class="accordion-body">
+                            <div class="accordion-inner">
+                                <p>A venture refers to a new activity, usually the establishment of a new business entity. Ideation refers to the initial phase of the entrepreneurial process, specifically the formation and generation of new ideas or concepts that serve as the foundation for the venture.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-card">
+                        <button class="accordion-toggle" onclick="toggleAccordion(this)">
+                            <span>Q2: Based on the guest lecture insights from U.S. Secretary of Commerce Penny Pritzker, what are the three key takeaways regarding entrepreneurial leadership?</span>
+                            <div class="icon-plus-minus"></div>
+                        </button>
+                        <div class="accordion-body">
+                            <div class="accordion-inner">
+                                <p>The three key takeaways are:</p>
+                                <ul>
+                                    <li>Business should be utilized as a tool for driving positive social and economic change.</li>
+                                    <li>Early exposure to operational responsibility and business discussions significantly shapes future leadership capabilities.</li>
+                                    <li>True entrepreneurial motivation stems from a desire to solve large-scale, structural, and real-world inefficiencies rather than just seeking profit.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-card">
+                        <button class="accordion-toggle" onclick="toggleAccordion(this)">
+                            <span>Q3: Contrast an "Entrepreneur" with an "Intrapreneur" regarding their operational environment and risk profile.</span>
+                            <div class="icon-plus-minus"></div>
+                        </button>
+                        <div class="accordion-body">
+                            <div class="accordion-inner">
+                                <p>An Entrepreneur operates independently, starting their own enterprise from the ground up, and assumes total personal and financial risk for the venture's success or failure. An Intrapreneur operates within the boundaries of an existing, often large organization. While they exhibit the same innovative mindset and take hands-on responsibility for new projects, the financial risk is primarily borne by the parent organization.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-card">
+                        <button class="accordion-toggle" onclick="toggleAccordion(this)">
+                            <span>Q4: Explain the four classifications of entrepreneurs based on "Functional Characteristics."</span>
+                            <div class="icon-plus-minus"></div>
+                        </button>
+                        <div class="accordion-body">
+                            <div class="accordion-inner">
+                                <ul>
+                                    <li><strong>Innovative Entrepreneur:</strong> Introduces entirely new products, services, or markets, and is highly common in developed economies.</li>
+                                    <li><strong>Adaptive Entrepreneur:</strong> Imitates successful innovations developed by others and applies minor modifications to fit their specific market.</li>
+                                    <li><strong>Fabian Entrepreneur:</strong> Characterized by extreme caution and conservatism; they only adopt changes when it is absolutely unavoidable for survival.</li>
+                                    <li><strong>Drone Entrepreneur:</strong> Completely resists any changes to their traditional methods, regardless of market shifts, which often leads to business losses.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-card">
+                        <button class="accordion-toggle" onclick="toggleAccordion(this)">
+                            <span>Q5: What are the distinct roles involved in the "Promotional Functions" of an entrepreneur?</span>
+                            <div class="icon-plus-minus"></div>
+                        </button>
+                        <div class="accordion-body">
+                            <div class="accordion-inner">
+                                <p>Promotional functions occur during the foundational phase of a business and include:</p>
+                                <ul>
+                                    <li><strong>Identification of a Business Idea:</strong> Scanning the environment for opportunities, generating ideas, and conducting cost-benefit analyses to select the most viable option.</li>
+                                    <li><strong>Business Plan / Project Report Creation:</strong> Drafting the formal blueprint required for establishing the enterprise, which is strictly essential for securing financial assistance and banking loans.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-card">
+                        <button class="accordion-toggle" onclick="toggleAccordion(this)">
+                            <span>Q6: How do Peter F. Drucker and Joseph A. Schumpeter define entrepreneurship differently?</span>
+                            <div class="icon-plus-minus"></div>
+                        </button>
+                        <div class="accordion-body">
+                            <div class="accordion-inner">
+                                <p>Joseph A. Schumpeter defines the entrepreneur through a psychological and innovative lens, stating that entrepreneurs measure success through achievement and innovation, not profit alone. In contrast, Peter F. Drucker defines entrepreneurship as a discipline and a knowledge base rather than a science or an art, stating that when practiced methodically and systematically, it reduces risk and leads to effective commercial outcomes.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-card">
+                        <button class="accordion-toggle" onclick="toggleAccordion(this)">
+                            <span>Q7: Identify three primary sources of entrepreneurial opportunities and provide an example for each.</span>
+                            <div class="icon-plus-minus"></div>
+                        </button>
+                        <div class="accordion-body">
+                            <div class="accordion-inner">
+                                <ul>
+                                    <li><strong>Technological Changes:</strong> Advancements that enable new product categories. <em>Example:</em> The invention of smartphones enabling the creation of app-based businesses like mobile banking.</li>
+                                    <li><strong>Market Inefficiencies:</strong> Identifying gaps or shortages in existing traditional markets. <em>Example:</em> Airbnb addressing the shortage of affordable, short-term accommodation.</li>
+                                    <li><strong>Social and Environmental Changes:</strong> Shifts in consumer lifestyles or sustainability goals. <em>Example:</em> The rapid growth of plant-based food startups in response to environmental concerns.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        // Sidebar Navigation Active State Sync (No scroll animations)
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll(".nav-link");
+
+        window.addEventListener("scroll", () => {
+            let current = "";
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= (sectionTop - 150)) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove("active");
+                if (link.getAttribute("href").includes(current)) {
+                    link.classList.add("active");
+                }
+            });
+        });
+
+        // Interactive Analysis Widget Logic
+        function switchTab(tabId) {
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.widget-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Remove active class from all panes
+            const panes = document.querySelectorAll('.widget-pane');
+            panes.forEach(pane => pane.classList.remove('active'));
+            
+            // Add active class to clicked tab and corresponding pane
+            event.currentTarget.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // Accordion Logic
+        function toggleAccordion(button) {
+            const isActive = button.classList.contains('active');
+            
+            // Close all
+            document.querySelectorAll('.accordion-toggle').forEach(btn => {
+                btn.classList.remove('active');
+                btn.nextElementSibling.style.maxHeight = null;
+            });
+            
+            // If it wasn't active, open it
+            if (!isActive) {
+                button.classList.add('active');
+                const content = button.nextElementSibling;
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        }
+    </script>
+</body>
+</html>

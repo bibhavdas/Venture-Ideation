@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bio-Business Strategy Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --text-dark: #0f172a;
+            --text-muted: #475569;
+            --primary-green: #10b981; /* The requested green frame/accent */
+            --primary-green-light: #d1fae5;
+            --business-blue: #1e3a8a;
+            --business-blue-light: #dbeafe;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+            padding-bottom: 50px;
+        }
+
+        /* The Green Frame Overlay */
+        .page-frame {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border: 12px solid var(--primary-green);
+            pointer-events: none; /* Allows clicking through the frame */
+            z-index: 9999;
+        }
+
+        /* Subtle Background Art */
+        .bg-art {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.03;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            margin-bottom: 40px;
+        }
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+        .nav-link:hover { color: var(--primary-green); }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 0 30px; }
+
+        header { text-align: center; margin-bottom: 60px; padding-top: 20px; }
+        h1 { font-family: 'Poppins', sans-serif; font-size: 3rem; color: var(--business-blue); margin-bottom: 10px; line-height: 1.2; font-weight: 800; }
+        .subtitle { font-size: 1.2rem; color: var(--primary-green); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+
+        /* Test Tube Divider */
+        .test-tube-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 60px 0 40px;
+            position: relative;
+        }
+        .test-tube-divider::before, .test-tube-divider::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--primary-green-light), transparent);
+        }
+        .test-tube-divider svg {
+            margin: 0 20px;
+            width: 40px;
+            height: 40px;
+            fill: none;
+            stroke: var(--primary-green);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .section-heading {
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            color: var(--business-blue);
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+        }
+
+        /* Q-Cards */
+        .q-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-sm);
+            border-left: 6px solid var(--business-blue);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .q-card:hover { box-shadow: var(--shadow-md); border-left-color: var(--primary-green); }
+        .q-card.active { opacity: 1; transform: translateY(0); }
+
+        .question-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .q-icon {
+            width: 32px;
+            height: 32px;
+            flex-shrink: 0;
+            stroke: var(--business-blue);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .question-title {
+            font-size: 1.3rem; font-weight: 700; color: var(--text-dark);
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+        }
+
+        .answer-text { color: var(--text-muted); font-size: 1.05rem; }
+        .answer-text p { margin-bottom: 15px; }
+        .answer-text ul, .answer-text ol { margin-left: 20px; margin-bottom: 15px; }
+        .answer-text strong { color: var(--business-blue); }
+
+        .relatable-example {
+            background: var(--primary-green-light);
+            color: #065f46;
+            padding: 20px 25px; border-radius: 6px; margin-top: 25px;
+            font-weight: 500;
+            position: relative;
+        }
+        .example-label { 
+            display: block; font-family: 'Poppins', sans-serif; font-size: 0.85rem; 
+            color: var(--primary-green); text-transform: uppercase; margin-bottom: 5px; font-weight: 800; 
+        }
+
+        /* Interactive Graphical Representations */
+        .interactive-zone {
+            margin-top: 30px; padding: 30px;
+            background: var(--bg-light); border: 1px dashed var(--border-color);
+            border-radius: 8px; text-align: center;
+        }
+        .zone-title { font-family: 'Poppins', sans-serif; color: var(--business-blue); font-size: 1rem; text-transform: uppercase; margin-bottom: 20px; letter-spacing: 1px; font-weight: 700; }
+
+        /* Formula Box */
+        .formula-box {
+            display: inline-block; background: var(--bg-white); border: 2px solid var(--primary-green);
+            padding: 15px 30px; font-family: 'Poppins', sans-serif; font-size: 1.2rem;
+            color: var(--business-blue); font-weight: 700; border-radius: 50px;
+            box-shadow: var(--shadow-sm);
+        }
+        .f-highlight { color: var(--primary-green); margin: 0 5px; }
+
+        /* Tools Grid */
+        .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; }
+        .tool-box { background: var(--bg-white); border: 1px solid var(--border-color); padding: 25px; border-radius: 8px; transition: transform 0.3s; }
+        .tool-box:hover { transform: translateY(-5px); border-color: var(--business-blue); }
+        .tool-title { font-family: 'Poppins', sans-serif; font-weight: 700; color: var(--business-blue); margin-bottom: 10px; font-size: 1.1rem; }
+
+        /* BMC Grid */
+        .bmc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .bmc-cell { background: var(--bg-white); border: 1px solid var(--border-color); padding: 15px; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); border-radius: 6px; transition: all 0.3s; }
+        .bmc-cell:hover { background: var(--business-blue-light); color: var(--business-blue); border-color: var(--business-blue); transform: scale(1.05); }
+
+        @media(max-width: 768px) {
+            .tools-grid, .bmc-grid { grid-template-columns: 1fr; }
+            .top-nav { gap: 15px; flex-wrap: wrap; }
+            h1 { font-size: 2.2rem; }
+            .page-frame { border-width: 6px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- The Green Frame -->
+    <div class="page-frame"></div>
+
+    <!-- Background Business Art -->
+    <svg class="bg-art" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+        <pattern id="pattern-circles" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="2" fill="#1e3a8a"></circle>
+        </pattern>
+        <rect x="0" y="0" width="100%" height="100%" fill="url(#pattern-circles)"></rect>
+        <!-- Faint Chart Lines -->
+        <path d="M 0 800 Q 300 600 600 700 T 1200 400" fill="none" stroke="#10b981" stroke-width="4"/>
+    </svg>
+
+    <nav class="top-nav">
+        <a href="#part1" class="nav-link">Part 1: The Business Plan</a>
+        <a href="#part2" class="nav-link">Part 2: Ops & Feasibility</a>
+        <a href="#part3" class="nav-link">Part 3: Biotech Innovation</a>
+    </nav>
+
+    <main class="container">
+        <header>
+            <h1>Strategic Synergy</h1>
+            <p class="subtitle">Bridging Business Fundamentals with Biotech Innovation</p>
+        </header>
+
+        <!-- PART 1 -->
+        <div class="test-tube-divider" id="part1">
+            <svg viewBox="0 0 24 24"><path d="M9 2v17.5A2.5 2.5 0 0 0 11.5 22h1A2.5 2.5 0 0 0 15 19.5V2M9 6h6M9 10h6M10 16a1 1 0 1 0 2 0a1 1 0 0 0-2 0Z"/></svg>
+        </div>
+        <h2 class="section-heading">Part 1: The Core Business Plan</h2>
+
+        <article class="q-card reveal">
+            <div class="question-header">
+                <!-- Briefcase SVG -->
+                <svg class="q-icon" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                <h3 class="question-title">Q1: What exactly is a Business Plan/Model, and why is it so important?</h3>
+            </div>
+            <div class="answer-text">
+                <p>A business plan is a written roadmap prepared by management to summarize operational and financial objectives for the near future (usually 1 to three years) and how they will be achieved.</p>
+                <p><strong>Why it matters (Objectives & Benefits):</strong> It gives the organization a sense of direction, helps secure bank loans, assesses feasibility, establishes a basis for teamwork (like blueprints for a house), and helps anticipate problems so the company isn't caught off guard by changing markets.</p>
+            </div>
+        </article>
+
+        <article class="q-card reveal">
+            <div class="question-header">
+                <!-- File Text SVG -->
+                <svg class="q-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                <h3 class="question-title">Q2: What are the key elements and steps to creating a Business Plan?</h3>
+            </div>
+            <div class="answer-text">
+                <p>Writing a plan goes through specific phases: Researching and Collecting information, Strategizing, Calculating financials, Drafting, and finally Revising/Proofreading.</p>
+                <p><strong>Key Elements it must contain:</strong></p>
+                <ul>
+                    <li><strong>Executive Summary:</strong> The mission, leadership, and overall summary.</li>
+                    <li><strong>Products and Services:</strong> What you are selling, pricing, and any patents.</li>
+                    <li><strong>Market Analysis:</strong> Industry trends and competitor strengths/weaknesses.</li>
+                    <li><strong>Marketing Strategy:</strong> How you will attract and keep customers.</li>
+                    <li><strong>Financial Planning:</strong> Projections, balance sheets, and budgets.</li>
+                </ul>
+            </div>
+        </article>
+
+        <article class="q-card reveal">
+            <div class="question-header">
+                <!-- Bar Chart SVG -->
+                <svg class="q-icon" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                <h3 class="question-title">Q3: How do you build an effective Marketing Plan, and what analytical tools help?</h3>
+            </div>
+            <div class="answer-text">
+                <p>A marketing plan is the blueprint for achieving market goals. It requires setting up the <strong>8 P's of the Marketing Mix</strong>: Product, Price, Place, Promotion, People, Principle, Process, and Performance.</p>
+                
+                <div class="interactive-zone">
+                    <div class="zone-title">Analytical Evaluation Frameworks</div>
+                    <div class="tools-grid">
+                        <div class="tool-box">
+                            <div class="tool-title">SWOT Analysis</div>
+                            <p>Used to look <strong>inward</strong> at the project's internal Strengths, Weaknesses, Opportunities, and Threats.</p>
+                        </div>
+                        <div class="tool-box">
+                            <div class="tool-title">PEST Analysis</div>
+                            <p>Used to look <strong>outward</strong> at the changing Political, Economic, Social, and Technological environment.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relatable-example">
+                    <span class="example-label">Relatable Example</span>
+                    Imagine opening a local bakery. <strong>SWOT</strong> tells you your bread is delicious (Strength) but you lack parking (Weakness). <strong>PEST</strong> tells you the government just offered a tax break for small businesses (Political/Economic) and people are currently obsessed with gluten-free diets on social media (Social).
+                </div>
+            </div>
+        </article>
+
+        <!-- PART 2 -->
+        <div class="test-tube-divider" id="part2">
+            <svg viewBox="0 0 24 24"><path d="M9 2v17.5A2.5 2.5 0 0 0 11.5 22h1A2.5 2.5 0 0 0 15 19.5V2M9 6h6M9 10h6M10 16a1 1 0 1 0 2 0a1 1 0 0 0-2 0Z"/></svg>
+        </div>
+        <h2 class="section-heading">Part 2: Operations, Finance, & Feasibility</h2>
+
+        <article class="q-card reveal">
+            <div class="question-header">
+                <!-- Factory/Gears SVG -->
+                <svg class="q-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                <h3 class="question-title">Q4: What is Production/Manufacturing Planning and why does it matter?</h3>
+            </div>
+            <div class="answer-text">
+                <p>It is the process of determining, acquiring, and arranging all facilities (plant location, equipment, labor) necessary for future operations.</p>
+                <p><strong>Objectives:</strong> It ensures the steady flow of production, minimizes raw material wastage, ensures optimum inventory (no over-stocking or under-stocking), improves labor productivity, reduces costs, and ultimately results in consumer satisfaction.</p>
+            </div>
+        </article>
+
+        <article class="q-card reveal">
+            <div class="question-header">
+                <!-- Activity SVG -->
+                <svg class="q-icon" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                <h3 class="question-title">Q5: How do the Organizational and Financial Plans keep a business stable?</h3>
+            </div>
+            <div class="answer-text">
+                <p><strong>Organizational Plan:</strong> You inventory everything your business currently does, look for gaps or redundancies, define reporting structures, and draft a clear organizational chart.</p>
+                <p><strong>Financial Plan:</strong> You develop monthly financial projections (expected income vs. expenses), arrange financing with bankers, and critically, <em>plan for contingencies</em> (having emergency cash reserves just in case revenues suddenly deteriorate).</p>
+            </div>
+        </article>
+
+        <article class="q-card reveal">
+            <div class="question-header">
+                <!-- Target SVG -->
+                <svg class="q-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                <h3 class="question-title">Q6: What is a Feasibility Study Report (FSR)?</h3>
+            </div>
+            <div class="answer-text">
+                <p>Before fully launching a project, organizations conduct a feasibility study. The FSR is the formal documented output that summarizes the results of this analysis. It proves whether the proposed solution is technically possible, business viable, cost-effective, and practically profitable.</p>
+            </div>
+        </article>
+
+        <!-- PART 3 -->
+        <div class="test-tube-divider" id="part3">
+            <svg viewBox="0 0 24 24"><path d="M9 2v17.5A2.5 2.5 0 0 0 11.5 22h1A2.5 2.5 0 0 0 15 19.5V2M9 6h6M9 10h6M10 16a1 1 0 1 0 2 0a1 1 0 0 0-2 0Z"/></svg>
+        </div>
+        <h2 class="section-heading">Part 3: Innovation in Entrepreneurship (Biotech Focus)</h2>
+
+        <article class="q-card reveal">
+            <div class="question-header">
+                <!-- Lightbulb SVG -->
+                <svg class="q-icon" viewBox="0 0 24 24"><line x1="9" y1="18" x2="15" y2="18"></line><line x1="10" y1="22" x2="14" y2="22"></line><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg>
+                <h3 class="question-title">Q7: What does "Innovation" actually mean for entrepreneurs?</h3>
+            </div>
+            <div class="answer-text">
+                <p>Having a new idea or a scientific discovery is not innovation. In entrepreneurship, an idea only becomes an innovation when it is converted into a solution that creates value and is sustained commercially over time.</p>
+                
+                <div class="interactive-zone">
+                    <div class="zone-title">The Entrepreneurial Equation</div>
+                    <div class="formula-box">
+                        Innovation = <span class="f-highlight">Novelty</span> + <span class="f-highlight">Usefulness</span> + <span class="f-highlight">Adoption</span>
+                    </div>
+                </div>
+
+                <div class="relatable-example">
+                    <span class="example-label">Relatable Example</span>
+                    Creating a coffee cup made of recycled ice is <em>novel</em>. But it melts quickly and ruins your clothes (not <em>useful</em>), so no one chooses to buy it (no <em>adoption</em>). It is a creative invention, but it failed as an entrepreneurial innovation.
+                </div>
+            </div>
+        </article>
+
+        <article class="q-card reveal">
+            <div class="question-header">
+                <!-- Search/Microscope Concept (Using eye for search) -->
+                <svg class="q-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <h3 class="question-title">Q8: How do entrepreneurs validate their ideas and spot real opportunities?</h3>
+            </div>
+            <div class="answer-text">
+                <p>High-quality startup ideas in biotech/pharma rarely start with 'what technology do we have?' They start with 'what problem is urgent and costly?' Strong ideas come from unmet clinical needs, diagnostic gaps, or supply chain bottlenecks.</p>
+                <p><strong>Validation Frameworks:</strong></p>
+                <ul>
+                    <li><strong>The Pain-Population-Payoff Test:</strong> How severe is the pain? How many people have it? Will someone actually pay to fix it?</li>
+                    <li><strong>Jobs-to-be-Done:</strong> Understanding that different stakeholders want different things. Patients want better outcomes, Clinicians want reliable decisions, and Insurers want reduced long-term costs.</li>
+                </ul>
+            </div>
+        </article>
+
+        <article class="q-card reveal">
+            <div class="question-header">
+                <!-- Layout/Grid SVG -->
+                <svg class="q-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                <h3 class="question-title">Q9: How do you build a Business Model, and what is the Business Model Canvas (BMC)?</h3>
+            </div>
+            <div class="answer-text">
+                <p>A business model explains how a company creates, delivers, and captures value. In Biotech, common models include Therapeutics development, Licensing technology to a pharma partner, Platform technology (like mRNA), or selling Tools/Services.</p>
+                <p><strong>The BMC:</strong> A one-page framework that captures the full logic of the business using nine specific building blocks. It forces clarity and helps students connect scientific ideas to business realities.</p>
+                
+                <div class="interactive-zone">
+                    <div class="zone-title">Business Model Canvas Schematic</div>
+                    <div class="bmc-grid">
+                        <div class="bmc-cell">Key Partnerships</div>
+                        <div class="bmc-cell">Key Activities</div>
+                        <div class="bmc-cell">Value Proposition</div>
+                        <div class="bmc-cell">Key Resources</div>
+                        <div class="bmc-cell">Customer Relationships</div>
+                        <div class="bmc-cell">Channels</div>
+                        <div class="bmc-cell">Cost Structure</div>
+                        <div class="bmc-cell">Customer Segments</div>
+                        <div class="bmc-cell">Revenue Streams</div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <article class="q-card reveal">
+            <div class="question-header">
+                <!-- Shield/Check SVG -->
+                <svg class="q-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <h3 class="question-title">Q10: What are the massive hurdles in bringing a biotech/pharma innovation to the actual market?</h3>
+            </div>
+            <div class="answer-text">
+                <p>The path from discovery to market is long, expensive, and highly regulated. Entrepreneurs must navigate:</p>
+                <ol>
+                    <li><strong>Funding Milestones:</strong> Because costs are high, funding is given in stages (Seed, Series A, B) to slowly reduce investor risk based on evidence generation.</li>
+                    <li><strong>Regulations:</strong> Innovations must be compliant. Regulators demand strict clinical trials to prove safety and efficacy.</li>
+                    <li><strong>Intellectual Property (IP):</strong> Patents must be filed early to defend competitive advantage.</li>
+                    <li><strong>Scaling & Manufacturing:</strong> Lab success does not equal factory success. You must scale with exact reproducibility, quality control, and GMP standards.</li>
+                    <li><strong>Commercialization:</strong> It is not just selling; it is getting the complex healthcare ecosystem (doctors, hospitals, payers) to actually adopt the workflow and provide reimbursement.</li>
+                </ol>
+            </div>
+        </article>
+
+    </main>
+
+    <script>
+        // Scroll Reveal Animation Logic
+        document.addEventListener("DOMContentLoaded", () => {
+            const cards = document.querySelectorAll('.reveal');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+
+            cards.forEach(card => observer.observe(card));
+        });
+    </script>
+</body>
+</html>

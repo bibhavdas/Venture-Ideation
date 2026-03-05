@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Bank: The Value Mapping Process & Practical Examples</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f4f7f9;
+            --text-main: #2c3e50;
+            --text-muted: #64748b;
+            --primary: #0f4c81; 
+            --secondary: #00a8cc; 
+            --accent: #e11d48; 
+            --success: #059669; 
+            --warning: #f59e0b;
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --shadow-lg: 0 20px 25px -5px rgba(15, 76, 129, 0.1), 0 10px 10px -5px rgba(15, 76, 129, 0.04);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.8;
+            overflow-x: hidden;
+            display: flex;
+        }
+
+        /* Corporate Art Background */
+        .corporate-bg-art {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1; pointer-events: none; opacity: 0.04;
+        }
+
+        /* Side Navigation */
+        .sidebar {
+            position: fixed; top: 0; left: 0; width: 80px; height: 100vh;
+            background: var(--card-bg); border-right: 1px solid var(--card-border);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 20px; z-index: 100; box-shadow: var(--shadow-sm);
+        }
+        .nav-dot {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: var(--bg-color); border: 2px solid var(--card-border);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Poppins', sans-serif; font-weight: 700; color: var(--text-muted);
+            text-decoration: none; transition: all 0.3s ease;
+        }
+        .nav-dot:hover, .nav-dot.active {
+            background: var(--primary); color: white; border-color: var(--primary);
+            transform: scale(1.1); box-shadow: 0 4px 10px rgba(15, 76, 129, 0.3);
+        }
+
+        /* Main Content */
+        .main-content { margin-left: 80px; padding: 60px 20px; width: calc(100% - 80px); }
+        .container { max-width: 1000px; margin: 0 auto; }
+
+        header { text-align: center; margin-bottom: 60px; }
+        h1 { font-family: 'Poppins', sans-serif; font-size: 2.8rem; color: var(--primary); margin-bottom: 10px; line-height: 1.2;}
+        h2 { font-family: 'Poppins', sans-serif; font-size: 1.5rem; color: var(--primary); margin-bottom: 15px; }
+
+        /* Question Cards */
+        .q-card {
+            background: var(--card-bg); border: 1px solid var(--card-border);
+            border-radius: 12px; padding: 40px; margin-bottom: 60px;
+            box-shadow: var(--shadow-sm); position: relative; overflow: hidden;
+            border-top: 6px solid var(--secondary);
+            opacity: 0; transform: translateY(30px); transition: all 0.6s ease;
+        }
+        .q-card.active { opacity: 1; transform: translateY(0); }
+
+        .question-title { font-size: 1.3rem; font-weight: 700; color: var(--text-main); margin-bottom: 20px; }
+        
+        .easy-explain {
+            background: rgba(0, 168, 204, 0.05); border-left: 4px solid var(--secondary);
+            padding: 15px 20px; border-radius: 0 8px 8px 0; margin-bottom: 25px;
+            font-style: italic; color: var(--primary); font-weight: 600;
+        }
+        .easy-explain::before {
+            content: "Easy Explanation: "; font-weight: 800; font-style: normal;
+        }
+
+        .academic-answer {
+            background: #f8fafc; border: 1px solid var(--card-border); border-radius: 8px;
+            padding: 30px 25px 25px 25px; margin-bottom: 30px; position: relative;
+        }
+        .academic-answer::before {
+            content: "Official Notes Content"; position: absolute;
+            top: -12px; left: 15px; background: var(--primary); color: white;
+            font-size: 0.75rem; font-weight: 700; padding: 4px 12px; border-radius: 4px; font-family: 'Poppins', sans-serif; text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .academic-answer p { margin-bottom: 15px; }
+        .academic-answer p:last-child { margin-bottom: 0; }
+
+        /* Interactive Zones */
+        .graphical-zone {
+            padding: 30px; background: var(--bg-color); border-radius: 8px;
+            border: 1px solid #cbd5e1; text-align: center; margin-top: 30px;
+        }
+        .graphical-title {
+            color: var(--primary); font-family: 'Poppins', sans-serif; font-size: 1.1rem;
+            margin-bottom: 5px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .graphical-desc { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 25px; }
+
+        .btn-action {
+            background: var(--primary); color: white; border: none; padding: 10px 20px;
+            border-radius: 4px; font-family: 'Poppins', sans-serif; font-size: 1rem;
+            cursor: pointer; transition: background 0.3s; font-weight: 600; margin-bottom: 15px;
+        }
+        .btn-action:hover { background: #0c3e69; }
+
+        /* Q1: Translation Engine */
+        .q1-svg { width: 100%; max-width: 600px; height: auto; display: block; margin: 0 auto; }
+        .data-stream { stroke-dasharray: 200; stroke-dashoffset: 200; transition: stroke-dashoffset 1.5s ease; }
+        .data-stream.active { stroke-dashoffset: 0; }
+        .engine-node { opacity: 0; transition: opacity 0.5s ease 1.5s; }
+        .engine-node.active { opacity: 1; }
+
+        /* Q2: Progression Pipeline */
+        .pipeline-container { display: flex; align-items: center; justify-content: space-between; position: relative; max-width: 700px; margin: 0 auto 30px; padding: 20px 0; }
+        .pipeline-track { position: absolute; top: 50%; left: 10%; right: 10%; height: 4px; background: var(--card-border); z-index: 1; transform: translateY(-50%); }
+        .pipeline-fill { position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: var(--secondary); transition: width 2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .pipeline-node { position: relative; z-index: 2; background: white; border: 3px solid var(--card-border); width: 120px; height: 120px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 600; transition: border-color 0.5s, box-shadow 0.5s; }
+        .pipeline-node.active { border-color: var(--secondary); box-shadow: 0 0 15px rgba(0, 168, 204, 0.4); }
+        .node-title { color: var(--primary); font-family: 'Poppins', sans-serif; font-size: 1rem; margin-bottom: 5px; }
+
+        /* Q3: Step-by-Step Flow */
+        .step-container { display: flex; flex-direction: column; gap: 15px; max-width: 600px; margin: 0 auto; text-align: left; }
+        .step-item { background: white; border: 1px solid var(--card-border); border-left: 6px solid var(--card-border); padding: 20px; border-radius: 8px; transition: all 0.4s ease; opacity: 0.5; transform: translateX(-20px); }
+        .step-item.active { opacity: 1; transform: translateX(0); border-left-color: var(--primary); box-shadow: var(--shadow-sm); }
+        .step-title { font-family: 'Poppins', sans-serif; font-weight: 600; color: var(--text-main); font-size: 1.1rem; }
+
+        /* Q4: Tabbed Case Studies */
+        .tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .tab-btn { background: white; border: 1px solid var(--card-border); padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: 600; color: var(--text-muted); transition: all 0.3s; }
+        .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .tab-content { display: none; background: white; border: 1px solid var(--card-border); border-radius: 8px; padding: 25px; text-align: left; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .cs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .cs-box { background: var(--bg-color); padding: 15px; border-radius: 6px; border-left: 4px solid var(--secondary); }
+        .cs-box h4 { font-family: 'Poppins', sans-serif; font-size: 0.9rem; color: var(--primary); margin-bottom: 5px; }
+        .cs-box p { font-size: 0.9rem; margin: 0; }
+
+        /* Q5: Hazard Matrix */
+        .hazard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; max-width: 600px; margin: 0 auto 30px; }
+        .hazard-card { background: white; border: 1px solid var(--card-border); padding: 20px; border-radius: 8px; cursor: pointer; transition: all 0.3s; font-weight: 600; color: var(--text-main); }
+        .hazard-card:hover { border-color: var(--accent); color: var(--accent); box-shadow: var(--shadow-sm); }
+        .hazard-svg { width: 100%; max-width: 250px; margin: 0 auto; display: block; }
+        .core-node { fill: var(--primary); transition: fill 0.3s; }
+        .fracture-line { stroke: var(--accent); stroke-width: 3; stroke-dasharray: 100; stroke-dashoffset: 100; transition: stroke-dashoffset 0.4s ease; }
+        .hazard-active .core-node { fill: #2c3e50; }
+        .hazard-active .fracture-line { stroke-dashoffset: 0; }
+
+        @media(max-width: 768px) {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; width: 100%; padding: 30px 15px; }
+            .pipeline-container { flex-direction: column; gap: 30px; }
+            .pipeline-track { width: 4px; height: 100%; top: 10%; bottom: 10%; left: 50%; transform: translateX(-50%); }
+            .pipeline-fill { width: 100%; height: 0%; transition: height 2s cubic-bezier(0.4, 0, 0.2, 1); }
+            .cs-grid { grid-template-columns: 1fr; }
+            .hazard-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <svg class="corporate-bg-art" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1440 800">
+        <path fill="#0f4c81" d="M -100 -50 Q 150 200 300 -50 Z" />
+        <path fill="#00a8cc" d="M 1200 850 Q 1000 500 1500 400 Z" />
+        <rect x="100" y="600" width="200" height="200" fill="#0f4c81" opacity="0.5" rx="20" transform="rotate(15 200 700)" />
+        <g transform="translate(1100, 100)">
+            <rect x="0" y="100" width="30" height="100" rx="2" fill="#0f4c81" />
+            <rect x="40" y="50" width="30" height="150" rx="2" fill="#00a8cc" />
+            <rect x="80" y="0" width="30" height="200" rx="2" fill="#e11d48" />
+        </g>
+    </svg>
+
+    <nav class="sidebar">
+        <a href="#q1" class="nav-dot">Q1</a>
+        <a href="#q2" class="nav-dot">Q2</a>
+        <a href="#q3" class="nav-dot">Q3</a>
+        <a href="#q4" class="nav-dot">Q4</a>
+        <a href="#q5" class="nav-dot">Q5</a>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <header>
+                <p style="font-size: 1rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Question Bank</p>
+                <h1>The Value Mapping Process & Practical Examples</h1>
+            </header>
+
+            <!-- Q1 -->
+            <section id="q1" class="q-card reveal">
+                <div class="question-title">Q1: What is Value Mapping, and what are its primary objectives in product development?</div>
+                <div class="easy-explain">Value mapping is the translation process that turns a list of complex technical specifications into a compelling story of how the product makes a customer's life better. It ensures you build what the market actually demands.</div>
+                
+                <div class="academic-answer">
+                    <p>Value Mapping is the process of linking product features to customer needs, expectations, and perceived benefits. It ensures that each feature contributes to solving a real problem or creating a meaningful improvement in the customer’s experience. Instead of focusing only on what a product can do, value mapping focuses on why it matters to the user.</p>
+                    <p>The main objective of value mapping is to translate technical specifications into understandable and relatable benefits. It aligns product development with actual market demand, improves marketing communication, and helps prioritize features that deliver the highest impact. This approach reduces unnecessary complexity and enhances customer satisfaction.</p>
+                </div>
+
+                <div class="graphical-zone">
+                    <div class="graphical-title">Graphical Representation: The Translation Engine</div>
+                    <div class="graphical-desc">Execute the processing simulation to observe how technical inputs translate into strategic outputs.</div>
+                    
+                    <button class="btn-action" onclick="runTranslationEngine()">Execute Translation</button>
+
+                    <svg class="q1-svg" viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Input Document -->
+                        <rect x="50" y="100" width="80" height="50" rx="4" fill="#ffffff" stroke="#2c3e50" stroke-width="2"/>
+                        <text x="90" y="120" font-size="10" font-weight="600" text-anchor="middle" fill="#2c3e50">Technical</text>
+                        <text x="90" y="135" font-size="10" font-weight="600" text-anchor="middle" fill="#2c3e50">Specs</text>
+
+                        <!-- Data Streams -->
+                        <path id="stream-main" class="data-stream" d="M 130 125 L 250 125" fill="none" stroke="#00a8cc" stroke-width="3"/>
+                        <path id="stream-top" class="data-stream" d="M 330 125 L 380 125 L 380 50 L 420 50" fill="none" stroke="#00a8cc" stroke-width="3"/>
+                        <path id="stream-mid" class="data-stream" d="M 330 125 L 420 125" fill="none" stroke="#00a8cc" stroke-width="3"/>
+                        <path id="stream-bot" class="data-stream" d="M 330 125 L 380 125 L 380 200 L 420 200" fill="none" stroke="#00a8cc" stroke-width="3"/>
+
+                        <!-- Processing Unit -->
+                        <rect x="250" y="95" width="80" height="60" rx="8" fill="#0f4c81"/>
+                        <text x="290" y="120" font-size="11" font-weight="700" text-anchor="middle" fill="#ffffff">Value</text>
+                        <text x="290" y="135" font-size="11" font-weight="700" text-anchor="middle" fill="#ffffff">Mapping</text>
+
+                        <!-- Output Nodes -->
+                        <g id="node-1" class="engine-node">
+                            <rect x="420" y="30" width="130" height="40" rx="4" fill="#ffffff" stroke="#10b981" stroke-width="2"/>
+                            <text x="485" y="55" font-size="10" font-weight="600" text-anchor="middle" fill="#2c3e50">Market Demand Alignment</text>
+                        </g>
+                        <g id="node-2" class="engine-node">
+                            <rect x="420" y="105" width="130" height="40" rx="4" fill="#ffffff" stroke="#10b981" stroke-width="2"/>
+                            <text x="485" y="130" font-size="10" font-weight="600" text-anchor="middle" fill="#2c3e50">Marketing Communication</text>
+                        </g>
+                        <g id="node-3" class="engine-node">
+                            <rect x="420" y="180" width="130" height="40" rx="4" fill="#ffffff" stroke="#10b981" stroke-width="2"/>
+                            <text x="485" y="205" font-size="10" font-weight="600" text-anchor="middle" fill="#2c3e50">Feature Prioritization</text>
+                        </g>
+                    </svg>
+                </div>
+            </section>
+
+            <!-- Q2 -->
+            <section id="q2" class="q-card reveal">
+                <div class="question-title">Q2: Describe the progression of the Feature–Benefit–Value relationship with an example.</div>
+                <div class="easy-explain">A feature is what the product has. A benefit is what the feature does. Value is how that benefit makes the user feel or improves their situation.</div>
+                
+                <div class="academic-answer">
+                    <p>A product feature becomes meaningful only when it is converted into a benefit and then into perceived value.</p>
+                    <p>For example, a large battery capacity is a feature, long usage time is the benefit, and convenience or reduced stress is the value.</p>
+                    <p>This progression helps organizations communicate offerings in a way that resonates with real customer motivations.</p>
+                </div>
+
+                <div class="graphical-zone">
+                    <div class="graphical-title">Graphical Representation: Progression Pipeline</div>
+                    <div class="graphical-desc">Initiate the data flow to observe the transformation from technical feature to perceived value.</div>
+                    
+                    <button class="btn-action" onclick="runPipeline()">Initiate Flow</button>
+
+                    <div class="pipeline-container">
+                        <div class="pipeline-track">
+                            <div class="pipeline-fill" id="pipe-fill"></div>
+                        </div>
+                        
+                        <div class="pipeline-node" id="p-node-1">
+                            <div class="node-title">Feature</div>
+                            <span style="color: var(--text-muted); text-align: center;">Large Battery Capacity</span>
+                        </div>
+                        
+                        <div class="pipeline-node" id="p-node-2">
+                            <div class="node-title">Benefit</div>
+                            <span style="color: var(--text-muted); text-align: center;">Long Usage Time</span>
+                        </div>
+                        
+                        <div class="pipeline-node" id="p-node-3">
+                            <div class="node-title">Value</div>
+                            <span style="color: var(--text-muted); text-align: center;">Convenience & Reduced Stress</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Q3 -->
+            <section id="q3" class="q-card reveal">
+                <div class="question-title">Q3: What are the sequential steps involved in the Value Mapping Process?</div>
+                <div class="easy-explain">You start by researching what the customer actually needs. Then, you list your features, determine their practical benefits, map those benefits to deeper emotional or economic values, and finally, focus your resources on the features that matter most.</div>
+                
+                <div class="academic-answer">
+                    <p>The value mapping process begins with identifying customer needs and problems through research and feedback.</p>
+                    <p>Next, organizations list all product features and translate them into practical benefits.</p>
+                    <p>These benefits are then linked to emotional, social, or economic value, and finally, high-impact features are prioritized for development and marketing focus.</p>
+                </div>
+
+                <div class="graphical-zone">
+                    <div class="graphical-title">Graphical Representation: Step-by-Step Process Flow</div>
+                    <div class="graphical-desc">Advance through the sequence to build the mapping framework.</div>
+                    
+                    <button class="btn-action" id="btn-step" onclick="advanceStep()">Advance Sequence (0/4)</button>
+
+                    <div class="step-container">
+                        <div class="step-item" id="step-1">
+                            <div class="step-title">Step 1: Identify Needs</div>
+                            <div style="font-size: 0.9rem; color: var(--text-muted);">Identify customer needs and problems through research and feedback.</div>
+                        </div>
+                        <div class="step-item" id="step-2">
+                            <div class="step-title">Step 2: Translate Features</div>
+                            <div style="font-size: 0.9rem; color: var(--text-muted);">List all product features and translate them into practical benefits.</div>
+                        </div>
+                        <div class="step-item" id="step-3">
+                            <div class="step-title">Step 3: Link to Value</div>
+                            <div style="font-size: 0.9rem; color: var(--text-muted);">Link practical benefits to deeper emotional, social, or economic value.</div>
+                        </div>
+                        <div class="step-item" id="step-4">
+                            <div class="step-title">Step 4: Prioritize</div>
+                            <div style="font-size: 0.9rem; color: var(--text-muted);">Prioritize high-impact features for development and marketing focus.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Q4 -->
+            <section id="q4" class="q-card reveal">
+                <div class="question-title">Q4: How does value mapping apply to real-world business models and their stakeholders?</div>
+                <div class="easy-explain">Mapping is a practical tool used by top companies. For Airbnb, a search filter isn't just a piece of code; it is a tool that gives travelers confidence and saves time, which ultimately generates revenue for hosts and growth for the company.</div>
+                
+                <div class="academic-answer">
+                    <p>Consider an online learning platform where live classes, recorded lectures, affordable subscriptions, and certification are key features. These features provide benefits such as flexible learning, reduced cost, and skill recognition, which ultimately create value in the form of career growth, confidence, and convenience for the learner.</p>
+                    <p>For Airbnb, advanced search filters and verified host badges (Features) provide quick and accurate accommodation searches and increased trust (Benefits), resulting in time savings, higher confidence, and increased conversions (Value). Stakeholders include Travelers (easy booking), Hosts (visibility/bookings), Airbnb (higher revenue), and Investors (growth).</p>
+                    <p>For Moderna, an mRNA platform (Feature) yields faster vaccine development (Benefit), creating public health protection and economic stability (Value) for Patients, Governments, and Hospitals.</p>
+                </div>
+
+                <div class="graphical-zone">
+                    <div class="graphical-title">Graphical Representation: Case Study Data Cards</div>
+                    <div class="graphical-desc">Select a corporate profile to analyze its respective value mapping matrix.</div>
+                    
+                    <div class="tabs">
+                        <button class="tab-btn active" onclick="switchTab('tab-learning')">Online Learning</button>
+                        <button class="tab-btn" onclick="switchTab('tab-airbnb')">Airbnb</button>
+                        <button class="tab-btn" onclick="switchTab('tab-moderna')">Moderna</button>
+                    </div>
+
+                    <div id="tab-learning" class="tab-content active">
+                        <div class="cs-grid">
+                            <div class="cs-box"><h4>Core Features</h4><p>Live classes, recorded lectures, affordable subscriptions, certification.</p></div>
+                            <div class="cs-box"><h4>Practical Benefits</h4><p>Flexible learning, reduced cost, skill recognition.</p></div>
+                            <div class="cs-box"><h4>Perceived Value</h4><p>Career growth, confidence, convenience for the learner.</p></div>
+                            <div class="cs-box"><h4>Primary Stakeholder</h4><p>Learner / Student (career advancement).</p></div>
+                        </div>
+                    </div>
+
+                    <div id="tab-airbnb" class="tab-content">
+                        <div class="cs-grid">
+                            <div class="cs-box"><h4>Core Features</h4><p>Advanced search filters, verified host badges, user reviews.</p></div>
+                            <div class="cs-box"><h4>Practical Benefits</h4><p>Quick accommodation search, increased trust in hosts, smooth booking.</p></div>
+                            <div class="cs-box"><h4>Perceived Value</h4><p>Time savings, higher confidence, improved customer satisfaction.</p></div>
+                            <div class="cs-box"><h4>Key Stakeholders</h4><p>Travelers (safe booking), Hosts (visibility), Investors (growth).</p></div>
+                        </div>
+                    </div>
+
+                    <div id="tab-moderna" class="tab-content">
+                        <div class="cs-grid">
+                            <div class="cs-box"><h4>Core Features</h4><p>mRNA platform, rapid design capability, scalable manufacturing.</p></div>
+                            <div class="cs-box"><h4>Practical Benefits</h4><p>Faster development, adaptability to new strains, large-scale production.</p></div>
+                            <div class="cs-box"><h4>Perceived Value</h4><p>Public health protection, reduced mortality, economic stability.</p></div>
+                            <div class="cs-box"><h4>Key Stakeholders</h4><p>Patients (protection), Governments (immunization), Hospitals (supply).</p></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Q5 -->
+            <section id="q5" class="q-card reveal">
+                <div class="question-title">Q5: What are the common challenges faced during value mapping, and how do they impact the organization?</div>
+                <div class="easy-explain">Companies often ruin their value mapping efforts by using complicated tech slang, ignoring what customers actually say, or cramming too many useless features into a product under the false assumption that more is always better.</div>
+                
+                <div class="academic-answer">
+                    <p>Organizations often face issues such as using excessive technical jargon, ignoring customer feedback, overloading products with unnecessary features, or assuming all features are equally valuable.</p>
+                    <p>These mistakes reduce clarity and weaken the overall value proposition.</p>
+                </div>
+
+                <div class="graphical-zone">
+                    <div class="graphical-title">Graphical Representation: Hazard Identification Matrix</div>
+                    <div class="graphical-desc">Hover over the specific hazards to observe their structural impact on the core value proposition.</div>
+                    
+                    <div class="hazard-grid" id="hazard-grid">
+                        <div class="hazard-card" onmouseenter="triggerHazard()" onmouseleave="clearHazard()">Excessive Technical Jargon</div>
+                        <div class="hazard-card" onmouseenter="triggerHazard()" onmouseleave="clearHazard()">Ignoring Customer Feedback</div>
+                        <div class="hazard-card" onmouseenter="triggerHazard()" onmouseleave="clearHazard()">Overloading Unnecessary Features</div>
+                        <div class="hazard-card" onmouseenter="triggerHazard()" onmouseleave="clearHazard()">Assuming All Features Equal</div>
+                    </div>
+
+                    <div id="hazard-visualizer">
+                        <svg class="hazard-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <circle class="core-node" cx="100" cy="100" r="60"/>
+                            <text x="100" y="95" font-size="12" font-weight="700" text-anchor="middle" fill="#ffffff" font-family="Inter">Value</text>
+                            <text x="100" y="110" font-size="12" font-weight="700" text-anchor="middle" fill="#ffffff" font-family="Inter">Proposition</text>
+                            
+                            <!-- Fracture Lines -->
+                            <path class="fracture-line" d="M 100 40 L 90 70 L 110 85 L 100 100" fill="none"/>
+                            <path class="fracture-line" d="M 40 100 L 65 95 L 80 110 L 100 100" fill="none"/>
+                            <path class="fracture-line" d="M 160 100 L 130 110 L 120 90 L 100 100" fill="none"/>
+                        </svg>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+        // Scroll Reveal & Sidebar Logic
+        document.addEventListener("DOMContentLoaded", () => {
+            const cards = document.querySelectorAll('.q-card');
+            const navDots = document.querySelectorAll('.nav-dot');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        let id = entry.target.getAttribute('id');
+                        navDots.forEach(dot => {
+                            dot.classList.remove('active');
+                            if(dot.getAttribute('href') === '#' + id) dot.classList.add('active');
+                        });
+                    }
+                });
+            }, { threshold: 0.2 });
+
+            cards.forEach(card => observer.observe(card));
+        });
+
+        // Q1 Translation Engine Logic
+        function runTranslationEngine() {
+            const streams = document.querySelectorAll('.data-stream');
+            const nodes = document.querySelectorAll('.engine-node');
+            
+            // Reset
+            streams.forEach(s => s.classList.remove('active'));
+            nodes.forEach(n => n.classList.remove('active'));
+            
+            // Trigger
+            setTimeout(() => {
+                streams.forEach(s => s.classList.add('active'));
+                nodes.forEach(n => n.classList.add('active'));
+            }, 100);
+        }
+
+        // Q2 Pipeline Logic
+        function runPipeline() {
+            const fill = document.getElementById('pipe-fill');
+            const n1 = document.getElementById('p-node-1');
+            const n2 = document.getElementById('p-node-2');
+            const n3 = document.getElementById('p-node-3');
+
+            fill.style.width = '0%';
+            n1.classList.remove('active');
+            n2.classList.remove('active');
+            n3.classList.remove('active');
+
+            setTimeout(() => {
+                fill.style.width = '100%';
+                n1.classList.add('active');
+                setTimeout(() => n2.classList.add('active'), 1000); // Activate mid-way
+                setTimeout(() => n3.classList.add('active'), 2000); // Activate end
+            }, 100);
+        }
+
+        // Q3 Step Flow Logic
+        let currentStep = 0;
+        function advanceStep() {
+            if (currentStep < 4) {
+                currentStep++;
+                document.getElementById(`step-${currentStep}`).classList.add('active');
+                document.getElementById('btn-step').innerText = `Advance Sequence (${currentStep}/4)`;
+            }
+            if (currentStep === 4) {
+                document.getElementById('btn-step').disabled = true;
+                document.getElementById('btn-step').innerText = "Sequence Complete";
+            }
+        }
+
+        // Q4 Tab Logic
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Q5 Hazard Logic
+        function triggerHazard() {
+            document.getElementById('hazard-visualizer').classList.add('hazard-active');
+        }
+        function clearHazard() {
+            document.getElementById('hazard-visualizer').classList.remove('hazard-active');
+        }
+    </script>
+</body>
+</html>

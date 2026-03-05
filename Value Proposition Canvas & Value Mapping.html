@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Value Proposition & Mapping Strategy Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1E3A8A; /* Deep Corporate Blue */
+            --secondary: #0284C7; /* Crisp Azure */
+            --accent: #F59E0B; /* Gold Accent */
+            --bg-color: #F8FAFC;
+            --surface: #FFFFFF;
+            --text-main: #334155;
+            --text-heading: #0F172A;
+            --text-muted: #64748B;
+            --border: #E2E8F0;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --radius-md: 12px;
+            --radius-lg: 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.7;
+            /* Subtle Corporate Dot Pattern */
+            background-image: radial-gradient(var(--border) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-heading);
+            font-weight: 700;
+        }
+
+        /* Layout */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-right: 1px solid var(--border);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            color: var(--primary);
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 12px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-link svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background-color: var(--primary);
+            color: #ffffff;
+            transform: translateX(5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            padding: 60px 40px;
+            flex: 1;
+            max-width: 1200px;
+        }
+
+        /* Section Styling */
+        section {
+            margin-bottom: 80px;
+            scroll-margin-top: 60px;
+        }
+
+        .section-header {
+            margin-bottom: 40px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-header::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+        }
+
+        /* Hero / Exec Summary */
+        .hero-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            box-shadow: var(--shadow-lg);
+            border-top: 6px solid var(--primary);
+            margin-bottom: 60px;
+        }
+
+        .hero-card h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            color: var(--text-heading);
+        }
+
+        .hero-card p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+        }
+
+        /* Core Topics Grid */
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 30px;
+        }
+
+        .topic-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 30px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--secondary);
+        }
+
+        .topic-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(2, 132, 199, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .topic-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .topic-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .relatable-example {
+            margin-top: 20px;
+            padding: 15px 20px;
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+        }
+
+        .relatable-example strong {
+            color: #B45309;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Interactive Framework Analysis */
+        .interactive-container {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 50px;
+            box-shadow: var(--shadow-md);
+            text-align: center;
+        }
+
+        .canvas-grid {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .canvas-shape {
+            flex: 1;
+            max-width: 350px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .canvas-shape:hover {
+            transform: scale(1.02);
+        }
+
+        .value-map-box {
+            background: #EFF6FF;
+            border: 2px dashed var(--secondary);
+            border-radius: 8px;
+            aspect-ratio: 1;
+            display: grid;
+            grid-template-areas: 
+                "creator creator"
+                "product reliever";
+            gap: 4px;
+            padding: 20px;
+        }
+
+        .customer-profile-circle {
+            background: #F0FDF4;
+            border: 2px dashed #16A34A;
+            border-radius: 50%;
+            aspect-ratio: 1;
+            display: grid;
+            grid-template-areas: 
+                "gain gain"
+                "job pain";
+            gap: 4px;
+            padding: 30px;
+        }
+
+        .canvas-label {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .info-panel {
+            margin-top: 30px;
+            padding: 20px;
+            background: var(--primary);
+            color: white;
+            border-radius: 8px;
+            display: none;
+            animation: fadeIn 0.4s ease;
+            text-align: left;
+        }
+
+        /* Question Accordion */
+        .accordion-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .accordion-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s;
+        }
+
+        .accordion-header {
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: transparent;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: var(--text-heading);
+            transition: background 0.3s;
+        }
+
+        .accordion-header:hover {
+            background: #F1F5F9;
+        }
+
+        .accordion-header.active {
+            color: var(--primary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .accordion-icon {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .accordion-header.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            background: #FAFAF9;
+            color: var(--text-main);
+        }
+
+        .accordion-content p {
+            margin: 20px 0;
+        }
+
+        /* Utilities */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar { width: 220px; }
+            .main-content { margin-left: 220px; padding: 40px 30px; }
+        }
+
+        @media (max-width: 768px) {
+            .app-container { flex-direction: column; }
+            .sidebar { 
+                width: 100%; 
+                height: auto; 
+                position: static; 
+                padding: 20px; 
+                flex-direction: row; 
+                flex-wrap: wrap; 
+                justify-content: center;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+            .main-content { margin-left: 0; padding: 30px 20px; }
+            .canvas-grid { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="brand">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
+                <h2 style="font-size: 1.2rem;">Strategy Guide</h2>
+            </div>
+            <a href="#summary" class="nav-link active">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                Executive Summary
+            </a>
+            <a href="#core-topics" class="nav-link">
+                <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                Core Topics
+            </a>
+            <a href="#interactive-analysis" class="nav-link">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                Interactive Analysis
+            </a>
+            <a href="#exam-questions" class="nav-link">
+                <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                Knowledge Verification
+            </a>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            
+            <!-- Executive Summary -->
+            <section id="summary" class="reveal">
+                <div class="hero-card">
+                    <h1>Value Proposition Canvas & Value Mapping</h1>
+                    <p>This comprehensive guide explores the designing, implementing, and measuring of effective value propositions using the Value Proposition Canvas and Customer Value Mapping. It delves into the critical alignment between customer profiles (jobs, pains, gains) and value maps (products, pain relievers, gain creators). Furthermore, the content details the significance of targeted market segmentation, the integration of customer feedback to refine Unique Value Propositions (UVPs), strategies to avoid common developmental pitfalls, and the operational application of value mapping to drive sustainable business growth and long-term customer loyalty.</p>
+                </div>
+            </section>
+
+            <!-- Core Topics -->
+            <section id="core-topics">
+                <div class="section-header reveal">
+                    <h2>Core Topics Analysis</h2>
+                </div>
+                
+                <div class="topics-grid">
+                    <!-- Topic 1 -->
+                    <div class="topic-card reveal">
+                        <div class="topic-icon">
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                        </div>
+                        <h3 class="topic-title">1. The Value Proposition Canvas</h3>
+                        <p>A strategic, dynamic tool used to ensure a product or service perfectly aligns with what customers value. It consists of two halves: the Customer Profile (outlining the customer's jobs to be done, pains, and desired gains) and the Value Map (detailing the products/services, pain relievers, and gain creators).</p>
+                        <div class="relatable-example">
+                            <strong>Relatable Example</strong>
+                            A project management tool acts as a "service" to help teams manage tasks (Job). It features automated reporting, which relieves the administrative burden of manual data entry (Pain Reliever), and includes real-time collaboration tools that surprise users by boosting team morale and efficiency beyond basic expectations (Gain Creator).
+                        </div>
+                    </div>
+
+                    <!-- Topic 2 -->
+                    <div class="topic-card reveal">
+                        <div class="topic-icon">
+                            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        </div>
+                        <h3 class="topic-title">2. Market Segmentation Strategies</h3>
+                        <p>Analyzing different customer groups to tailor value propositions effectively. Segmentation can be Demographic (age, income), Psychographic (lifestyle, values), Behavioral (usage, attitude), Geographic (location), Needs-Based (specific problems), or Value-Based (lifetime profitability).</p>
+                        <div class="relatable-example">
+                            <strong>Relatable Example</strong>
+                            A streaming service utilizes needs-based and demographic segmentation by offering a specific "Family Plan" that includes strict parental controls to attract households with children, while simultaneously offering a mobile-only, budget-friendly plan for university students.
+                        </div>
+                    </div>
+
+                    <!-- Topic 3 -->
+                    <div class="topic-card reveal">
+                        <div class="topic-icon">
+                            <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        </div>
+                        <h3 class="topic-title">3. Crafting Unique Value Propositions</h3>
+                        <p>A UVP is a strategic statement articulating the distinct value and primary reason a prospect should buy from a brand. Crafting it requires identifying core needs, analyzing competition, leveraging emotional drivers, ensuring clear communication, and continuous A/B testing.</p>
+                        <div class="relatable-example">
+                            <strong>Relatable Example</strong>
+                            A fitness apparel company identifies that its target segment highly values sustainability (Core Need). Their UVP highlights ethically sourced materials rather than just durability. They integrate this by launching targeted campaigns on platforms utilized by eco-conscious consumers.
+                        </div>
+                    </div>
+
+                    <!-- Topic 4 -->
+                    <div class="topic-card reveal">
+                        <div class="topic-icon">
+                            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                        </div>
+                        <h3 class="topic-title">4. Customer Feedback & Impact Measurement</h3>
+                        <p>Customer feedback acts as a strategic asset to identify core benefits, uncover hidden needs, improve customer experience, and inform necessary pivots. The impact of a UVP is measured quantitatively and qualitatively through Net Promoter Scores (NPS), retention metrics, and revenue analysis.</p>
+                        <div class="relatable-example">
+                            <strong>Relatable Example</strong>
+                            A ride-sharing application initially focused its UVP purely on low cost. However, consistent customer feedback revealed a hidden need for safety and driver reliability, prompting the company to pivot its UVP to highlight rigorous background checks and ride-tracking features.
+                        </div>
+                    </div>
+
+                    <!-- Topic 5 -->
+                    <div class="topic-card reveal">
+                        <div class="topic-icon">
+                            <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                        </div>
+                        <h3 class="topic-title">5. Common Pitfalls in Development</h3>
+                        <p>Organizations often fail by making specific strategic errors, including ignoring actual customer feedback, underestimating the competition, overpromising benefits, neglecting emotional connections, maintaining inconsistent cross-channel messaging, and using overly complex technical jargon.</p>
+                        <div class="relatable-example">
+                            <strong>Relatable Example</strong>
+                            A software company launches a new product and uses highly technical jargon in its marketing (Complexity Over Clarity). Non-technical small business owners fail to grasp the benefits, rendering the UVP ineffective despite the software's high quality.
+                        </div>
+                    </div>
+
+                    <!-- Topic 6 -->
+                    <div class="topic-card reveal">
+                        <div class="topic-icon">
+                            <svg viewBox="0 0 24 24"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="21"></line><line x1="15" y1="3" x2="15" y2="21"></line></svg>
+                        </div>
+                        <h3 class="topic-title">6. Customer Value Mapping</h3>
+                        <p>A strategic process that visualizes the value a product delivers throughout the customer journey. It aligns product development with business goals, optimizes the customer experience by addressing friction points, and allocates resources efficiently. Successful mapping involves gathering comprehensive insights.</p>
+                        <div class="relatable-example">
+                            <strong>Relatable Example</strong>
+                            A language-learning application maps its user journey and discovers a high drop-off rate during the first week. Product operations introduce adaptive difficulty levels and daily streaks to address this specific friction point, resulting in increased daily active users.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interactive Framework Analysis -->
+            <section id="interactive-analysis">
+                <div class="section-header reveal">
+                    <h2>Interactive Framework Analysis</h2>
+                </div>
+                
+                <div class="interactive-container reveal">
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">Click on the distinct modules of the Value Proposition Canvas to explore their strategic definitions.</p>
+                    
+                    <div class="canvas-grid">
+                        <!-- Value Map (Square) -->
+                        <div class="canvas-shape" onclick="showCanvasInfo('map')">
+                            <div class="canvas-label">The Value Map</div>
+                            <div class="value-map-box">
+                                <div style="grid-area: creator; background: #DBEAFE; display: flex; align-items:center; justify-content:center; border-radius: 4px; font-weight:600; color: #1D4ED8;">Gain Creators</div>
+                                <div style="grid-area: product; background: #DBEAFE; display: flex; align-items:center; justify-content:center; border-radius: 4px; font-weight:600; color: #1D4ED8; padding: 10px; text-align: center;">Products & Services</div>
+                                <div style="grid-area: reliever; background: #DBEAFE; display: flex; align-items:center; justify-content:center; border-radius: 4px; font-weight:600; color: #1D4ED8; padding: 10px; text-align: center;">Pain Relievers</div>
+                            </div>
+                        </div>
+
+                        <!-- Customer Profile (Circle) -->
+                        <div class="canvas-shape" onclick="showCanvasInfo('profile')">
+                            <div class="canvas-label">Customer Profile</div>
+                            <div class="customer-profile-circle">
+                                <div style="grid-area: gain; background: #DCFCE7; display: flex; align-items:center; justify-content:center; border-radius: 4px; font-weight:600; color: #15803D;">Gains</div>
+                                <div style="grid-area: job; background: #DCFCE7; display: flex; align-items:center; justify-content:center; border-radius: 4px; font-weight:600; color: #15803D; padding: 10px;">Customer Jobs</div>
+                                <div style="grid-area: pain; background: #DCFCE7; display: flex; align-items:center; justify-content:center; border-radius: 4px; font-weight:600; color: #15803D; padding: 10px;">Pains</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Info Display Panel -->
+                    <div id="canvas-info-panel" class="info-panel">
+                        <!-- Content injected via JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Exam-Based Questions -->
+            <section id="exam-questions">
+                <div class="section-header reveal">
+                    <h2>Knowledge Verification</h2>
+                </div>
+
+                <div class="accordion-container">
+                    
+                    <!-- Q1 -->
+                    <div class="accordion-item reveal">
+                        <div class="accordion-header">
+                            <span>Q1: What are the two primary components of the Value Proposition Canvas, and what elements reside within each?</span>
+                            <svg class="accordion-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p>The two primary components are the Customer Profile and the Value Map. The Customer Profile includes Jobs (tasks or problems customers are trying to solve), Pains (negative experiences or risks), and Gains (desired benefits). The Value Map includes Products and Services (the actual offerings), Pain Relievers (how the product alleviates specific pains), and Gain Creators (how the product creates expected or surprising benefits).</p>
+                        </div>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="accordion-item reveal">
+                        <div class="accordion-header">
+                            <span>Q2: Detail four of the distinct strategies used for analyzing market segments.</span>
+                            <svg class="accordion-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Four common strategies include: 1) Demographic Analysis (segmenting by age, gender, income, education), 2) Psychographic Segmentation (segmenting by lifestyle, values, and personality), 3) Behavioral Segmentation (focusing on consumer knowledge, attitude, and response to a product), and 4) Needs-Based Segmentation (targeting specific customer problems or requirements).</p>
+                        </div>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div class="accordion-item reveal">
+                        <div class="accordion-header">
+                            <span>Q3: Identify five common pitfalls organizations face when developing a value proposition.</span>
+                            <svg class="accordion-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Five common pitfalls include: 1) Ignoring customer feedback and relying on internal assumptions, 2) Underestimating competitors and lacking differentiation, 3) Overpromising benefits which erodes trust, 4) Neglecting the emotional connection customers seek, and 5) Complexity over clarity by using inaccessible technical jargon.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q4 -->
+                    <div class="accordion-item reveal">
+                        <div class="accordion-header">
+                            <span>Q4: How does customer feedback directly inform and shape value propositions?</span>
+                            <svg class="accordion-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Customer feedback informs value propositions by identifying core benefits that customers appreciate most, uncovering hidden needs that can lead to new features (e.g., the rise of ride-sharing), improving the overall customer experience by addressing negative feedback, tailoring messaging to specific segments, and sometimes prompting a complete innovation or business pivot.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q5 -->
+                    <div class="accordion-item reveal">
+                        <div class="accordion-header">
+                            <span>Q5: What is Customer Value Mapping and why is it vital in product operations?</span>
+                            <svg class="accordion-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Customer Value Mapping is a strategic process that visualizes the value a product delivers to customers by identifying their needs, pain points, and desired outcomes across their journey. It is vital because it prioritizes customer needs, aligns cross-functional teams, prevents investing in low-value functionalities, reduces churn, and translates abstract user needs into actionable product strategies.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q6 -->
+                    <div class="accordion-item reveal">
+                        <div class="accordion-header">
+                            <span>Q6: What specific methods can a business use to measure the impact of its value propositions?</span>
+                            <svg class="accordion-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Businesses can measure impact through Customer Feedback and Satisfaction Surveys (like Net Promoter Scores), Retention and Loyalty Metrics, Sales and Revenue Analysis (including A/B testing results), tracking Market Share and Competitive Positioning, observing internal Operational Efficiency, conducting Brand Perception Studies, and analyzing Social Media Engagement.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q7 -->
+                    <div class="accordion-item reveal">
+                        <div class="accordion-header">
+                            <span>Q7: What are the main challenges product managers face when implementing customer value mapping?</span>
+                            <svg class="accordion-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p>The primary challenges include: 1) Capturing diverse customer needs and balancing conflicting priorities across different segments, 2) Translating insights into action, especially when facing resource and budget constraints in complex organizations, and 3) Maintaining up-to-date maps by continuously monitoring evolving customer expectations and market trends.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        // Intersection Observer for Scroll Reveal Animations
+        document.addEventListener("DOMContentLoaded", () => {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            const revealOptions = {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                });
+            }, revealOptions);
+
+            reveals.forEach(reveal => {
+                revealOnScroll.observe(reveal);
+            });
+        });
+
+        // Sidebar Navigation Highlight Sync
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll(".nav-link");
+
+        window.addEventListener("scroll", () => {
+            let current = "";
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 150)) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove("active");
+                if (link.getAttribute("href").includes(current)) {
+                    link.classList.add("active");
+                }
+            });
+        });
+
+        // Accordion Logic
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const isActive = header.classList.contains('active');
+
+                // Close all other accordions
+                document.querySelectorAll('.accordion-header').forEach(h => {
+                    h.classList.remove('active');
+                    h.nextElementSibling.style.maxHeight = null;
+                    h.nextElementSibling.style.paddingTop = '0';
+                    h.nextElementSibling.style.paddingBottom = '0';
+                });
+
+                // Toggle current accordion
+                if (!isActive) {
+                    header.classList.add('active');
+                    content.style.maxHeight = content.scrollHeight + 40 + "px"; // 40 for padding
+                    content.style.paddingTop = "5px";
+                    content.style.paddingBottom = "20px";
+                }
+            });
+        });
+
+        // Interactive Canvas Logic
+        function showCanvasInfo(type) {
+            const panel = document.getElementById('canvas-info-panel');
+            panel.style.display = 'block';
+            
+            // Remove animation to restart it
+            panel.style.animation = 'none';
+            panel.offsetHeight; /* trigger reflow */
+            panel.style.animation = null;
+
+            if (type === 'map') {
+                panel.innerHTML = `
+                    <h4 style="margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 8px;">The Value Map (The Business Offering)</h4>
+                    <ul style="margin-left: 20px; font-size: 0.95rem;">
+                        <li style="margin-bottom: 8px;"><strong>Products & Services:</strong> The precise items, platforms, or services you offer to help customers complete their functional, social, or emotional jobs.</li>
+                        <li style="margin-bottom: 8px;"><strong>Pain Relievers:</strong> A description of exactly how your product/service alleviates the specific frustrations, risks, or obstacles the customer faces.</li>
+                        <li><strong>Gain Creators:</strong> An outline of how your offering creates the benefits, outcomes, or positive surprises that the customer desires.</li>
+                    </ul>
+                `;
+            } else if (type === 'profile') {
+                panel.innerHTML = `
+                    <h4 style="margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 8px;">The Customer Profile (The Target Audience)</h4>
+                    <ul style="margin-left: 20px; font-size: 0.95rem;">
+                        <li style="margin-bottom: 8px;"><strong>Customer Jobs:</strong> The fundamental tasks, problems, or needs customers are trying to satisfy in their personal or professional lives.</li>
+                        <li style="margin-bottom: 8px;"><strong>Pains:</strong> The negative emotions, undesired costs, risks, and severe situations customers experience before, during, or after getting a job done.</li>
+                        <li><strong>Gains:</strong> The exact outcomes and benefits customers want to achieve (can be required, expected, desired, or unexpected).</li>
+                    </ul>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

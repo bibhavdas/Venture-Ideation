@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Interviewing & Insights</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f4f7f9;
+            --text-main: #2c3e50;
+            --text-muted: #64748b;
+            --primary: #0f4c81; 
+            --secondary: #00a8cc; 
+            --accent: #e11d48; 
+            --success: #059669; 
+            --warning: #f59e0b;
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --shadow-lg: 0 20px 25px -5px rgba(15, 76, 129, 0.1), 0 10px 10px -5px rgba(15, 76, 129, 0.04);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.8;
+            overflow-x: hidden;
+            display: flex;
+        }
+
+        /* Corporate Art Background */
+        .corporate-bg-art {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1; pointer-events: none; opacity: 0.04;
+        }
+
+        /* Side Navigation */
+        .sidebar {
+            position: fixed; top: 0; left: 0; width: 80px; height: 100vh;
+            background: var(--card-bg); border-right: 1px solid var(--card-border);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 20px; z-index: 100; box-shadow: var(--shadow-sm);
+        }
+        .nav-dot {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: var(--bg-color); border: 2px solid var(--card-border);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Poppins', sans-serif; font-weight: 700; color: var(--text-muted);
+            text-decoration: none; transition: all 0.3s ease; font-size: 0.85rem;
+        }
+        .nav-dot:hover, .nav-dot.active {
+            background: var(--primary); color: white; border-color: var(--primary);
+            transform: scale(1.1); box-shadow: 0 4px 10px rgba(15, 76, 129, 0.3);
+        }
+
+        /* Main Content */
+        .main-content { margin-left: 80px; padding: 60px 20px; width: calc(100% - 80px); }
+        .container { max-width: 1000px; margin: 0 auto; }
+
+        header { text-align: center; margin-bottom: 60px; }
+        h1 { font-family: 'Poppins', sans-serif; font-size: 2.8rem; color: var(--primary); margin-bottom: 10px; line-height: 1.2;}
+        h2 { font-family: 'Poppins', sans-serif; font-size: 1.5rem; color: var(--primary); margin-bottom: 15px; }
+
+        /* Theory Summary Section */
+        .summary-section {
+            background: var(--card-bg); border: 1px solid var(--card-border);
+            border-radius: 12px; padding: 40px; margin-bottom: 60px;
+            box-shadow: var(--shadow-sm); border-top: 6px solid var(--primary);
+        }
+        .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 20px; }
+        .example-box {
+            background: rgba(0, 168, 204, 0.05); border-left: 4px solid var(--secondary);
+            padding: 25px; border-radius: 0 8px 8px 0; margin-top: 30px;
+        }
+        .example-title { font-family: 'Poppins', sans-serif; font-size: 1.2rem; color: var(--primary); font-weight: 700; margin-bottom: 10px; }
+
+        /* Question Cards */
+        .q-card {
+            background: var(--card-bg); border: 1px solid var(--card-border);
+            border-radius: 12px; padding: 40px; margin-bottom: 60px;
+            box-shadow: var(--shadow-sm); position: relative; overflow: hidden;
+            border-top: 6px solid var(--secondary);
+            opacity: 0; transform: translateY(30px); transition: all 0.6s ease;
+        }
+        .q-card.active { opacity: 1; transform: translateY(0); }
+
+        .question-title { font-size: 1.3rem; font-weight: 700; color: var(--text-main); margin-bottom: 20px; }
+        
+        .academic-answer {
+            background: #f8fafc; border: 1px solid var(--card-border); border-radius: 8px;
+            padding: 30px 25px 25px 25px; margin-bottom: 30px; position: relative;
+        }
+        .academic-answer::before {
+            content: "Official Notes Content"; position: absolute;
+            top: -12px; left: 15px; background: var(--primary); color: white;
+            font-size: 0.75rem; font-weight: 700; padding: 4px 12px; border-radius: 4px; font-family: 'Poppins', sans-serif; text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .academic-answer p { margin-bottom: 15px; }
+        .academic-answer ul { margin-left: 20px; margin-bottom: 15px; list-style-type: square; }
+        .academic-answer p:last-child, .academic-answer ul:last-child { margin-bottom: 0; }
+
+        /* Graphical Representations */
+        .graphical-zone {
+            padding: 30px; background: var(--bg-color); border-radius: 8px;
+            border: 1px solid #cbd5e1; text-align: center; margin-top: 30px;
+        }
+        .graphical-title {
+            color: var(--primary); font-family: 'Poppins', sans-serif; font-size: 1.1rem;
+            margin-bottom: 5px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .graphical-desc { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 25px; }
+
+        .btn-action {
+            background: var(--primary); color: white; border: none; padding: 10px 20px;
+            border-radius: 4px; font-family: 'Poppins', sans-serif; font-size: 1rem;
+            cursor: pointer; transition: background 0.3s; font-weight: 600; margin-bottom: 15px;
+        }
+        .btn-action:hover { background: #0c3e69; }
+
+        /* Custom SVGs and Interactives */
+        
+        /* Q1: Radar/Comparison */
+        .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .comp-card { background: white; border: 1px solid var(--card-border); padding: 20px; border-radius: 8px; transition: transform 0.3s, border-color 0.3s; cursor: pointer; }
+        .comp-card:hover { transform: translateY(-5px); border-color: var(--secondary); box-shadow: var(--shadow-sm); }
+        .comp-title { font-weight: 700; color: var(--primary); margin-bottom: 10px; font-family: 'Poppins', sans-serif;}
+        
+        /* Q2: Methodology Matrix */
+        .matrix-container { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; }
+        .matrix-node { width: 140px; height: 140px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; padding: 15px; font-size: 0.85rem; font-weight: 600; cursor: pointer; border: 3px solid var(--card-border); background: white; transition: all 0.3s; }
+        .node-best { color: var(--primary); }
+        .node-risk { color: var(--text-muted); }
+        .matrix-node.success { border-color: var(--success); background: #f0fdf4; color: var(--success); }
+        .matrix-node.danger { border-color: var(--accent); background: #fef2f2; color: var(--accent); animation: shake 0.4s; }
+        @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-5px);} 75% {transform: translateX(5px);} }
+
+        /* Q3: 7-Section Questionnaire Accordion */
+        .accordion { width: 100%; max-width: 600px; margin: 0 auto; text-align: left; }
+        .acc-item { background: white; border: 1px solid var(--card-border); border-radius: 6px; margin-bottom: 10px; overflow: hidden; }
+        .acc-header { padding: 15px 20px; background: var(--bg-color); cursor: pointer; font-weight: 600; color: var(--primary); font-family: 'Poppins', sans-serif; transition: background 0.3s; display: flex; justify-content: space-between; }
+        .acc-header:hover { background: #e2e8f0; }
+        .acc-body { padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease; background: white; font-size: 0.9rem; }
+        .acc-item.open .acc-body { max-height: 200px; padding: 20px; }
+
+        /* Q4: Data Processing Funnel */
+        .funnel-container { position: relative; width: 100%; max-width: 400px; margin: 0 auto; height: 300px; }
+        .funnel-svg { width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 1; }
+        .data-particle { position: absolute; width: 12px; height: 12px; background: var(--secondary); border-radius: 50%; opacity: 0; z-index: 2; }
+        @keyframes fallAndSort {
+            0% { top: 0; left: 50%; opacity: 1; transform: translateX(-50%); background: var(--secondary); }
+            50% { top: 150px; left: 50%; opacity: 1; transform: translateX(-50%); background: var(--primary); }
+            100% { top: 280px; left: var(--end-x); opacity: 0; transform: translateX(-50%); background: var(--success); }
+        }
+
+        /* Q5: Corporate Value Dashboard */
+        .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .dash-card { background: white; border: 1px solid var(--card-border); padding: 20px; border-radius: 8px; text-align: left; border-left: 4px solid var(--primary); transition: transform 0.3s; }
+        .dash-card:hover { transform: scale(1.02); box-shadow: var(--shadow-sm); border-left-color: var(--secondary); }
+        .dash-title { font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 5px; }
+        .dash-text { font-size: 0.85rem; color: var(--text-muted); }
+
+        @media(max-width: 768px) {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; width: 100%; padding: 30px 15px; }
+            .summary-grid, .comparison-grid, .dash-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <svg class="corporate-bg-art" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1440 800">
+        <path fill="#0f4c81" d="M -100 -50 Q 150 200 300 -50 Z" />
+        <path fill="#00a8cc" d="M 1200 850 Q 1000 500 1500 400 Z" />
+        <rect x="100" y="600" width="200" height="200" fill="#0f4c81" opacity="0.5" rx="20" transform="rotate(15 200 700)" />
+        <g transform="translate(1100, 100)">
+            <rect x="0" y="100" width="30" height="100" rx="2" fill="#0f4c81" />
+            <rect x="40" y="50" width="30" height="150" rx="2" fill="#00a8cc" />
+            <rect x="80" y="0" width="30" height="200" rx="2" fill="#059669" />
+        </g>
+    </svg>
+
+    <nav class="sidebar">
+        <a href="#summary" class="nav-dot">Top</a>
+        <a href="#q1" class="nav-dot">Q1</a>
+        <a href="#q2" class="nav-dot">Q2</a>
+        <a href="#q3" class="nav-dot">Q3</a>
+        <a href="#q4" class="nav-dot">Q4</a>
+        <a href="#q5" class="nav-dot">Q5</a>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <header>
+                <p style="font-size: 1rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Unit 2</p>
+                <h1>Customer Interviewing & Insights</h1>
+            </header>
+
+            <!-- Theory Summary & Relatable Example -->
+            <section id="summary" class="summary-section reveal">
+                <h2>Executive Theory Summary</h2>
+                <div class="summary-grid">
+                    <div>
+                        <p><strong>The Core Concept:</strong> Customer interviewing is a qualitative research method utilizing structured or semi-structured conversations to explore the 'why' behind decisions, separating it from standard quantitative surveys.</p>
+                        <p><strong>The Execution Pipeline:</strong> The process demands meticulous planning (setting objectives, ensuring ethics) and precise execution (building rapport, active listening, and strictly avoiding biased or leading questions).</p>
+                    </div>
+                    <div>
+                        <p><strong>The Transformation into Insights:</strong> Raw verbal data is organized into themes, mapped to customer jobs, pains, and gains, and finally translated into actionable strategic adjustments.</p>
+                        <p><strong>Corporate Application:</strong> Firms like Moderna utilize standardized 7-section questionnaires to understand institutional clients, thereby solving supply chain issues, refining R&D, and building deep corporate trust.</p>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <div class="example-title">Relatable Case Application: The Coffee Shop Dilemma</div>
+                    <p>Imagine a local coffee shop owner noticing declining morning sales. Assuming customers want sweeter breakfast options, the owner plans to invest heavily in a new line of expensive gourmet pastries. However, before investing, the owner conducts semi-structured interviews with 10 regular morning customers.</p>
+                    <p>Instead of asking a leading question ("Would you buy a gourmet chocolate croissant?"), the owner asks a behavioral question: "Can you describe your typical morning routine when you buy coffee here?"</p>
+                    <p>The raw data reveals that customers are usually rushing to catch a train. The <strong>insight</strong> generated is not that customers dislike the current food, but that pastries are too messy to eat while running. The actionable strategy: The owner introduces high-protein, bite-sized breakfast bars. Sales immediately increase. This illustrates moving from assumption-based strategy to evidence-based strategy through qualitative interviewing.</p>
+                </div>
+            </section>
+
+            <!-- Question Bank Starts -->
+
+            <!-- Q1 -->
+            <section id="q1" class="q-card reveal">
+                <div class="question-title">Q1: What is the primary difference between customer interviewing and traditional surveys, and what are its main objectives?</div>
+                
+                <div class="academic-answer">
+                    <p>Customer interviewing is a qualitative research method that involves structured or semi-structured conversations with existing or potential customers. It aims to explore customer behaviors, expectations, preferences, and challenges.</p>
+                    <p>Unlike surveys, interviews provide deep contextual information and reveal the ‘why’ behind customer decisions.</p>
+                    <p>The primary goals include identifying unmet needs, validating product ideas, understanding decision-making behavior, evaluating user experience, reducing launch risk, and building empathy for customer-centric design. This process supports evidence-based rather than assumption-based strategies.</p>
+                </div>
+
+                <div class="graphical-zone">
+                    <div class="graphical-title">Graphical Representation: Methodology Comparison</div>
+                    <div class="graphical-desc">Select a research methodology to review its specific structural output.</div>
+                    
+                    <div class="comparison-grid">
+                        <div class="comp-card" style="border-left: 4px solid var(--text-muted);">
+                            <div class="comp-title">Traditional Surveys</div>
+                            <p style="font-size: 0.9rem; color: var(--text-muted);">Quantitative Data. Focuses on the "What" and "How Many". Often utilizes predefined multiple-choice constraints.</p>
+                        </div>
+                        <div class="comp-card" style="border-left: 4px solid var(--primary);">
+                            <div class="comp-title">Customer Interviews</div>
+                            <p style="font-size: 0.9rem; color: var(--text-muted);">Qualitative Data. Focuses on the "Why". Provides deep contextual information and uncovers hidden behavioral motivations.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Q2 -->
+            <section id="q2" class="q-card reveal">
+                <div class="question-title">Q2: Outline the critical steps for planning and conducting an effective customer interview, and identify the common methodological challenges researchers must avoid.</div>
+                
+                <div class="academic-answer">
+                    <p><strong>Planning and Preparation:</strong> Effective interviews require defining clear research objectives, selecting representative participants, preparing open-ended and neutral questions, and ensuring ethical considerations such as consent and confidentiality. Proper planning increases reliability and data quality.</p>
+                    <p><strong>Conducting Effective Interviews:</strong> Successful interviews involve rapport building, active listening, probing follow-up questions, and unbiased interaction. Researchers must observe verbal and non-verbal cues, avoid leading questions, and accurately record responses with permission to ensure authenticity of information.</p>
+                    <p><strong>Common Challenges:</strong> Methodological discipline is required to avoid pitfalls. Challenges include biased questioning, small or unrepresentative samples, misinterpretation of qualitative data, ignoring contradictory feedback, and failing to analyze results systematically.</p>
+                </div>
+
+                <div class="graphical-zone">
+                    <div class="graphical-title">Graphical Representation: Execution Integrity Matrix</div>
+                    <div class="graphical-desc">Select nodes to identify standard best practices versus common methodological hazards.</div>
+                    
+                    <div class="matrix-container">
+                        <div class="matrix-node node-best" onclick="this.classList.add('success')">Active Listening & Rapport Building</div>
+                        <div class="matrix-node node-risk" onclick="this.classList.add('danger')">Biased & Leading Questions</div>
+                        <div class="matrix-node node-best" onclick="this.classList.add('success')">Open-Ended Neutral Queries</div>
+                        <div class="matrix-node node-risk" onclick="this.classList.add('danger')">Ignoring Contradictory Feedback</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Q3 -->
+            <section id="q3" class="q-card reveal">
+                <div class="question-title">Q3: Identify the five main types of interview questions, and describe the 7-section structural flow of a standard corporate interview questionnaire.</div>
+                
+                <div class="academic-answer">
+                    <p><strong>Types of Interview Questions:</strong> A balanced mix generates richer insights. Behavioral questions explore habits, pain-point questions identify frustrations, motivational questions reveal decision drivers, expectation questions identify ideal outcomes, and value-based questions uncover priorities and trade-offs.</p>
+                    <p><strong>Standard Questionnaire Structure (e.g., Moderna):</strong> A typical corporate questionnaire is designed to gather real insights to support strategic decisions through 7 specific sections:</p>
+                    <ul>
+                        <li><strong>Section 1 – Background / Warm-Up:</strong> Explores role, organization, and familiar products.</li>
+                        <li><strong>Section 2 – Current Usage & Behavior:</strong> Identifies products used most, selection processes, and adoption factors (efficacy, cost, trust).</li>
+                        <li><strong>Section 3 – Pain Points / Challenges:</strong> Uncovers issues related to delivery time, storage, pricing, and reasons for switching providers.</li>
+                        <li><strong>Section 4 – Needs & Expectations:</strong> Focuses on desired improvements and the importance of post-purchase support.</li>
+                        <li><strong>Section 5 – Value & Decision Perception:</strong> Defines what makes a product "high value" and how certifications affect trust.</li>
+                        <li><strong>Section 6 – Trust & Loyalty:</strong> Evaluates preference for established brands vs. startups and conditions for peer recommendations.</li>
+                        <li><strong>Section 7 – Closing / Insight Questions:</strong> Identifies corporate misunderstandings, motivations to try new solutions, and final unmet needs.</li>
+                    </ul>
+                </div>
+
+                <div class="graphical-zone">
+                    <div class="graphical-title">Graphical Representation: Structural Flow Architecture</div>
+                    <div class="graphical-desc">Expand the structural nodes to review the progressive data collection methodology.</div>
+                    
+                    <div class="accordion">
+                        <div class="acc-item" onclick="toggleAccordion(this)">
+                            <div class="acc-header"><span>1. Warm-Up & Background</span> <span>+</span></div>
+                            <div class="acc-body">Establishes baseline context: Role, organization type, and baseline familiarity with biotech products.</div>
+                        </div>
+                        <div class="acc-item" onclick="toggleAccordion(this)">
+                            <div class="acc-header"><span>2. Usage & Pain Points (Sections 2 & 3)</span> <span>+</span></div>
+                            <div class="acc-body">Maps current behavioral metrics. Identifies exact frustrations regarding storage, distribution, and pricing.</div>
+                        </div>
+                        <div class="acc-item" onclick="toggleAccordion(this)">
+                            <div class="acc-header"><span>3. Value & Trust (Sections 4, 5, 6)</span> <span>+</span></div>
+                            <div class="acc-body">Evaluates ideal expectations, perception of product value, and the foundational pillars of brand loyalty.</div>
+                        </div>
+                        <div class="acc-item" onclick="toggleAccordion(this)">
+                            <div class="acc-header"><span>4. Closing Insights (Section 7)</span> <span>+</span></div>
+                            <div class="acc-body">Captures final, unprompted suggestions and highlights areas where the industry misunderstands the customer.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Q4 -->
+            <section id="q4" class="q-card reveal">
+                <div class="question-title">Q4: Define "Customer Insights" and explain the process of transforming raw interview data into actionable business strategies.</div>
+                
+                <div class="academic-answer">
+                    <p><strong>Customer Insights – Meaning:</strong> Customer insights are deep interpretative understandings derived from interview data and research findings. They go beyond raw data to explain underlying motivations and behavioral patterns, enabling strategic and informed decisions.</p>
+                    <p><strong>Transforming Interviews into Insights:</strong> This process involves organizing data, identifying recurring themes, mapping jobs-pains-gains, prioritizing high-impact findings, and translating results into actionable strategies such as product improvements or marketing adjustments.</p>
+                    <p><strong>Importance:</strong> Strong insights improve product-market fit, increase customer satisfaction and loyalty, strengthen marketing communication, reduce development risk, and enhance competitive differentiation. They enable organizations to respond effectively to changing market conditions.</p>
+                </div>
+
+                <div class="graphical-zone">
+                    <div class="graphical-title">Graphical Representation: Data Processing Funnel</div>
+                    <div class="graphical-desc">Execute the processing simulation to visualize the conversion of raw data into strategic output.</div>
+                    
+                    <button class="btn-action" onclick="runFunnel()">Process Raw Data</button>
+
+                    <div class="funnel-container" id="funnel-area">
+                        <svg class="funnel-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Funnel Shape -->
+                            <polygon points="50,20 350,20 250,150 250,250 150,250 150,150" fill="none" stroke="#0f4c81" stroke-width="4" stroke-linejoin="round"/>
+                            <text x="200" y="80" font-size="12" font-weight="600" text-anchor="middle" fill="#2c3e50" font-family="Inter">Organize & Identify Themes</text>
+                            <text x="200" y="200" font-size="12" font-weight="600" text-anchor="middle" fill="#2c3e50" font-family="Inter">Map Jobs/Pains</text>
+                            
+                            <!-- Output Bins -->
+                            <rect x="100" y="270" width="80" height="20" fill="#059669" rx="4"/>
+                            <text x="140" y="284" font-size="10" fill="white" text-anchor="middle" font-family="Inter">Product Fit</text>
+                            
+                            <rect x="220" y="270" width="80" height="20" fill="#059669" rx="4"/>
+                            <text x="260" y="284" font-size="10" fill="white" text-anchor="middle" font-family="Inter">Marketing</text>
+                        </svg>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Q5 -->
+            <section id="q5" class="q-card reveal">
+                <div class="question-title">Q5: Using Moderna as an example, explain the four primary business benefits an organization gains from conducting structured customer interviews.</div>
+                
+                <div class="academic-answer">
+                    <p>Based on the Moderna corporate example, customer interviews provide four essential benefits:</p>
+                    <ul>
+                        <li><strong>Benefit 1 – Better Product Development:</strong> Insights guide Moderna to refine vaccine formulations, improve delivery methods, and design solutions that match real customer needs. This reduces unnecessary feature development and improves overall product–market fit.</li>
+                        <li><strong>Benefit 2 – Identification of Pain Points:</strong> Customer feedback reveals operational challenges such as cold-chain storage issues, distribution delays, pricing concerns, and regulatory documentation problems. Addressing these helps Moderna create more practical and user-friendly biotech solutions.</li>
+                        <li><strong>Benefit 3 – Trust, Loyalty & Competitive Advantage:</strong> When customers feel heard, trust and loyalty increase. Moderna can differentiate itself by offering better support, stronger communication, and customer-centric services. This strengthens brand reputation and long-term institutional relationships.</li>
+                        <li><strong>Benefit 4 – Smarter Strategy & Innovation:</strong> Interview data supports smarter marketing communication, reduces risk before product launch, and uncovers new innovation opportunities such as demand for new vaccine types or faster delivery systems. This leads to better R&D direction and sustainable growth.</li>
+                    </ul>
+                </div>
+
+                <div class="graphical-zone">
+                    <div class="graphical-title">Graphical Representation: Corporate Value Dashboard</div>
+                    <div class="graphical-desc">Review the specific output vectors generated by targeted institutional interviews.</div>
+                    
+                    <div class="dash-grid">
+                        <div class="dash-card">
+                            <div class="dash-title">Product Development</div>
+                            <div class="dash-text">Reduces unnecessary feature bloat. Optimizes vaccine formulations and delivery methods to achieve exact product-market fit.</div>
+                        </div>
+                        <div class="dash-card">
+                            <div class="dash-title">Pain Point Resolution</div>
+                            <div class="dash-text">Identifies critical supply chain friction, including cold-chain storage issues and regulatory documentation delays.</div>
+                        </div>
+                        <div class="dash-card">
+                            <div class="dash-title">Trust & Loyalty</div>
+                            <div class="dash-text">Customer-centric communication creates differentiation, fortifying brand reputation and long-term institutional relationships.</div>
+                        </div>
+                        <div class="dash-card">
+                            <div class="dash-title">Strategy & Innovation</div>
+                            <div class="dash-text">Mitigates pre-launch risk and drives superior R&D direction by uncovering demand for novel vaccine types.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+        // Scroll Reveal & Sidebar Logic
+        document.addEventListener("DOMContentLoaded", () => {
+            const sections = document.querySelectorAll('.reveal');
+            const navDots = document.querySelectorAll('.nav-dot');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        let id = entry.target.getAttribute('id');
+                        navDots.forEach(dot => {
+                            dot.classList.remove('active');
+                            if(dot.getAttribute('href') === '#' + id) dot.classList.add('active');
+                        });
+                    }
+                });
+            }, { threshold: 0.2 });
+
+            sections.forEach(sec => observer.observe(sec));
+        });
+
+        // Q3 Accordion Logic
+        function toggleAccordion(element) {
+            const isOpen = element.classList.contains('open');
+            // Close all
+            document.querySelectorAll('.acc-item').forEach(item => {
+                item.classList.remove('open');
+                item.querySelector('.acc-header span:last-child').textContent = '+';
+            });
+            // Open clicked if it was not already open
+            if(!isOpen) {
+                element.classList.add('open');
+                element.querySelector('.acc-header span:last-child').textContent = '-';
+            }
+        }
+
+        // Q4 Funnel Logic
+        function runFunnel() {
+            const container = document.getElementById('funnel-area');
+            
+            // Remove old particles
+            document.querySelectorAll('.data-particle').forEach(p => p.remove());
+
+            // Create new particles
+            for(let i=0; i<6; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'data-particle';
+                    // Determine end position (left bin or right bin)
+                    const endX = i % 2 === 0 ? '35%' : '65%';
+                    particle.style.setProperty('--end-x', endX);
+                    particle.style.animation = 'fallAndSort 2s ease forwards';
+                    container.appendChild(particle);
+                }, i * 300); // Staggered start
+            }
+        }
+    </script>
+</body>
+</html>
