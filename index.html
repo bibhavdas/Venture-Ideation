@@ -95,20 +95,25 @@
             font-weight: 400;
         }
 
-        /* Sleek, Horizontal Hero Box (Fits in existing space) */
+        /* Sleek, Horizontal Hero Box with Blinking Red Animation */
+        @keyframes urgent-pulse {
+            0% { transform: scale(1); background-color: rgba(211, 47, 47, 0.15); border-color: rgba(211, 47, 47, 0.5); box-shadow: 0 0 0 rgba(211, 47, 47, 0); }
+            50% { transform: scale(1.05); background-color: rgba(211, 47, 47, 0.6); border-color: rgba(211, 47, 47, 1); box-shadow: 0 0 25px rgba(211, 47, 47, 0.9); }
+            100% { transform: scale(1); background-color: rgba(211, 47, 47, 0.15); border-color: rgba(211, 47, 47, 0.5); box-shadow: 0 0 0 rgba(211, 47, 47, 0); }
+        }
+
         .hero-box {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(197, 160, 89, 0.4);
             border-radius: 6px;
             padding: 12px 25px;
             max-width: 650px;
-            margin: 35px auto 0; /* Uses the existing empty space below the paragraph */
+            margin: 35px auto 0; 
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 20px;
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
+            animation: urgent-pulse 1.2s ease-in-out infinite;
         }
 
         .hero-box h2 {
@@ -118,10 +123,11 @@
             font-weight: 400;
             margin: 0;
             letter-spacing: 0.5px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
         }
 
         .hero-box h2 span {
-            color: var(--brand-gold);
+            color: #FFD700;
             font-weight: 700;
         }
 
@@ -132,12 +138,12 @@
 
         .hero-btn {
             background-color: transparent;
-            color: var(--brand-gold);
-            border: 1px solid var(--brand-gold);
+            color: #FFFFFF;
+            border: 2px solid #FFFFFF;
             padding: 6px 16px;
             border-radius: 4px;
             font-family: var(--font-sans);
-            font-weight: 600;
+            font-weight: 700;
             text-decoration: none;
             text-transform: uppercase;
             font-size: 0.8rem;
@@ -146,8 +152,8 @@
         }
 
         .hero-btn:hover {
-            background-color: var(--brand-gold);
-            color: var(--brand-blue);
+            background-color: #FFFFFF;
+            color: #D32F2F;
         }
 
         /* Main Container */
@@ -238,7 +244,6 @@
             flex-grow: 1;
         }
 
-        /* The New Button */
         .read-btn {
             display: block;
             text-align: center;
@@ -404,7 +409,8 @@
                 </a>
 
                 <a href="Value Proposition & Product Feature Mapping.html" class="article-card">
-                    <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1503694978374-8a2fb5206f0d?auto=format&fit=crop&w=600&q=80');"></div>
+                    <!-- NEW IMAGE ADDED HERE FOR PRODUCT FEATURE MAPPING -->
+                    <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=600&q=80');"></div>
                     <div class="card-content">
                         <span class="article-tag">Strategy</span>
                         <h3 class="article-title">Product Feature Mapping Strategy</h3>
@@ -436,6 +442,17 @@
                         <span class="article-tag">Specialized Strategy</span>
                         <h3 class="article-title">Bridging Business & Biotech Innovation</h3>
                         <p class="article-excerpt">A specialized guide exploring the unique hurdles, operational feasibility, and business modeling required to bring complex biotech innovations to market.</p>
+                        <span class="read-btn">Read this topic</span>
+                    </div>
+                </a>
+                
+                <a href="ctc.html" class="article-card">
+                    <!-- NEW IMAGE ADDED HERE FOR CROSSING THE CHASM -->
+                    <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1506869640319-fe1a24fd76dc?auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="card-content">
+                        <span class="article-tag">Market Strategy</span>
+                        <h3 class="article-title">Crossing the Chasm</h3>
+                        <p class="article-excerpt">A strategic framework by Geoffrey A. Moore detailing the critical transition from early market enthusiasm to mainstream commercial success.</p>
                         <span class="read-btn">Read this topic</span>
                     </div>
                 </a>
